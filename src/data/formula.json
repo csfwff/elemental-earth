@@ -8333,6 +8333,7 @@
     "description": "金属镭在密封容器中发生衰变，缓慢产生氡气。",
     "fragment_description": "在密封存储中等待#radium#的放射性$aging$衰变，逐步收集生成的#radon_gas_mixture#。",
     "time_required": 300,
+    "required_era": "atomic_age",
     "required_actions": {
       "key": "aging",
       "min": 1
@@ -8347,10 +8348,10 @@
     "products": [
       {
         "key": "radon_gas_mixture",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "required_era": "atomic_age"
+    ]
   },
   {
     "key": "radon_purification",
