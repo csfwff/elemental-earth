@@ -1223,6 +1223,195 @@
     "time_required": 30
   },
   {
+    "key": "craft_pottery_mold",
+    "name": "制作陶模",
+    "category": "制作",
+    "description": "细心捏制并阴干陶土，制作出复杂的青铜器铸模。",
+    "time_required": 60,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 10
+      }
+    ],
+    "rewards": [
+      {
+        "key": "pottery_mold",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "mold_making"
+    ]
+  },
+  {
+    "key": "cast_four_goat_zun",
+    "name": "铸造四羊方尊",
+    "category": "奇观",
+    "description": "将熔融的青铜注入精密的陶模中，铸造传世重器。",
+    "time_required": 600,
+    "required_items": [
+      {
+        "key": "bronze",
+        "quantity": 100
+      },
+      {
+        "key": "pottery_mold",
+        "quantity": 2
+      }
+    ],
+    "rewards": [
+      {
+        "key": "four_goat_zun",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "mold_making"
+    ]
+  },
+  {
+    "key": "cut_store",
+    "name": "石材加工",
+    "category": "制作",
+    "description": "掌握了石材加工技术后，可以将石头切割成合适的大型石块。",
+    "time_required": 30,
+    "required_items": [
+      {
+        "key": "stone",
+        "quantity": 2
+      }
+    ],
+    "rewards": [
+      {
+        "key": "cut_stone",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 1000,
+        "guaranteed": true
+      }
+    ],
+    "required_techs": [
+      "stone_masonry"
+    ]
+  },
+  {
+    "key": "build_pyramid",
+    "name": "建造埃及金字塔",
+    "category": "奇观",
+    "description": "集结庞大的人力与物力，在沙漠中建立起永恒的丰碑。金字塔不仅是权力的象征，更是几何学与工程学的杰作。",
+    "time_required": 3600,
+    "required_items": [
+      {
+        "key": "cut_stone",
+        "quantity": 2000
+      }
+    ],
+    "rewards": [
+      {
+        "key": "giza_pyramid",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "stone_masonry"
+    ]
+  },
+  {
+    "key": "blue_brick_production",
+    "name": "烧制青砖",
+    "category": "制作",
+    "description": "将粘土制成砖坯，入窑高温焙烧，出窑青砖。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 4
+      }
+    ],
+    "rewards": [
+      {
+        "key": "blue_brick",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ]
+  },
+  {
+    "name": "采集糯米",
+    "key": "forage_sticky_rice",
+    "category": "采集",
+    "description": "在河边湿地采集野生稻谷，获得糯米。",
+    "rewards": [
+      {
+        "key": "sticky_rice",
+        "quantity": 1,
+        "probability": 900
+      }
+    ],
+    "time_required": 10,
+    "map": [
+      "river_side"
+    ]
+  },
+  {
+    "name": "制作糯米灰浆",
+    "key": "craft_sticky_rice_mortar",
+    "category": "制作",
+    "description": "将糯米蒸煮成浆，与熟石灰充分搅拌，制成糯米灰浆。",
+    "required_items": [
+      {
+        "key": "sticky_rice",
+        "quantity": 3
+      },
+      {
+        "key": "slaked_lime",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "rammed_earth_technology"
+    ],
+    "rewards": [
+      {
+        "key": "sticky_rice_mortar",
+        "quantity": 2
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "key": "build_ming_great_wall",
+    "name": "建造长城",
+    "category": "奇观",
+    "description": "动用大量人力，用糯米灰浆砌筑青砖和条石，分段建造长城。",
+    "time_required": 3600,
+    "required_items": [
+      {
+        "key": "blue_brick",
+        "quantity": 2000
+      },
+      {
+        "key": "sticky_rice_mortar",
+        "quantity": 200
+      }
+    ],
+    "rewards": [
+      {
+        "key": "ming_great_wall",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "rammed_earth_technology"
+    ]
+  },
+  {
     "key": "craft_fiber_cloth",
     "name": "制作纤维布",
     "category": "制作",
@@ -3560,6 +3749,124 @@
         "quantity": 1,
         "probability": 1000
       }
+    ]
+  },
+  {
+    "key": "build_pantheon",
+    "name": "建造罗马万神殿",
+    "category": "奇观",
+    "description": "按照古罗马的工艺，使用加工石块和罗马混凝土建造一座带有巨大穹顶的神殿。",
+    "time_required": 600,
+    "required_items": [
+      {
+        "key": "cut_stone",
+        "quantity": 100
+      },
+      {
+        "key": "roman_concrete",
+        "quantity": 200
+      },
+      {
+        "key": "wood",
+        "quantity": 50
+      }
+    ],
+    "rewards": [
+      {
+        "key": "pantheon",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "stone_masonry",
+      "roman_architecture"
+    ],
+    "map": [
+      "basin",
+      "mountain"
+    ]
+  },
+  {
+    "key": "roman_concrete_production",
+    "name": "制作混凝土",
+    "category": "制作",
+    "description": "将水泥、石灰石、砂子和水按比例混合搅拌，形成可塑的混凝土。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "cement",
+        "quantity": 2
+      },
+      {
+        "key": "limestone",
+        "quantity": 2
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      },
+      {
+        "key": "sand",
+        "quantity": 1
+      }
+    ],
+    "rewards": [],
+    "required_techs": [
+      "roman_architecture"
+    ]
+  },
+  {
+    "name": "建造埃菲尔铁塔",
+    "key": "build_eiffel_tower",
+    "category": "奇观",
+    "description": "使用大量钢梁和铆钉，按照埃菲尔的设计建造一座举世闻名的铁塔。",
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 7300
+      },
+      {
+        "key": "rivet",
+        "quantity": 2500
+      }
+    ],
+    "required_techs": [
+      "steel_construction"
+    ],
+    "rewards": [
+      {
+        "key": "eiffel_tower",
+        "quantity": 1
+      }
+    ],
+    "time_required": 300
+  },
+  {
+    "key": "make_rivet",
+    "name": "制作铆钉",
+    "category": "制作",
+    "description": "将钢条加热后放入陶模中锻造成铆钉形状。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 1
+      },
+      {
+        "key": "pottery_mold",
+        "quantity": 1,
+        "use": 0.01
+      }
+    ],
+    "rewards": [
+      {
+        "key": "rivet",
+        "quantity": 10,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
     ]
   }
 ]

@@ -244,9 +244,9 @@
     :required_techs="data.required_techs"
     :time_required="data.time_required"
   >
-    <div class="relative inline-flex action" ref="actionButtonRef">
+    <div class="relative inline-flex action w-full" ref="actionButtonRef">
       <button 
-        class="btn btn-soft w-[10em]" 
+        class="btn btn-soft w-full" 
         :disabled="!isEnabled" 
         @click="performAction"
       >
@@ -332,7 +332,7 @@
       <div v-else-if="packStore.manuscripts.length > 0" class="absolute -bottom-2 -right-2 z-110 dropdown dropdown-end">
         <button
           tabindex="0"
-          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] btn-tool"
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] tool-btn"
           title="添加到手札"
           @click.stop
         >

@@ -9,6 +9,26 @@
     ]
   },
   {
+    "name": "加工石块",
+    "key": "cut_stone",
+    "category": "材料",
+    "description": "表面平整的石灰岩块，边缘方正，散发着古老的静谧感。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "埃及金字塔",
+    "key": "giza_pyramid",
+    "category": "建筑",
+    "description": "巍峨的巨型石砌建筑，矗立在沙海之间，诉说着千年的秘密。它是人类劳动力与几何智慧的巅峰结晶。",
+    "type": [
+      "material",
+      "building"
+    ],
+    "milestone": "build_pyramid"
+  },
+  {
     "name": "木材",
     "key": "wood",
     "category": "燃料",
@@ -4114,5 +4134,108 @@
       "battery"
     ],
     "durable": 50
+  },
+  {
+    "key": "pottery_mold",
+    "name": "陶模",
+    "category": "工具",
+    "type": [
+      "material",
+      "tool"
+    ],
+    "description": "用精细粘土制成的铸造模具，可用于熔铸复杂的形状。",
+    "durable": 1
+  },
+  {
+    "key": "four_goat_zun",
+    "name": "四羊方尊",
+    "category": "器物",
+    "type": [
+      "material"
+    ],
+    "description": "青铜铸造技术的巅峰之作，四角各有一只卷角神羊，造型雄奇。",
+    "is_discovery": true
+  },
+  {
+    "key": "blue_brick",
+    "name": "青砖",
+    "category": "材料",
+    "type": [
+      "material"
+    ],
+    "description": "经过高温还原焙烧而成的青色砖块，比一般的红砖具有更强的抗氧化性和耐腐蚀性，质地致密且耐久。",
+    "milestone": 2,
+    "is_discovery": true
+  },
+  {
+    "key": "sticky_rice",
+    "name": "糯米",
+    "category": "材料",
+    "type": [
+      "material"
+    ],
+    "description": "富含支链淀粉的稻米，蒸熟后极具粘性，是制作中国古代传统强力胶合材料的关键原料。",
+    "milestone": 2,
+    "is_discovery": true
+  },
+  {
+    "key": "sticky_rice_mortar",
+    "name": "糯米灰浆",
+    "category": "材料",
+    "type": [
+      "material"
+    ],
+    "description": "将糯米汁与熟石灰、沙石混合制成的强力建筑胶凝材料。它具有极高的强度和韧性，是万里长城千年不倒的秘密。",
+    "milestone": 2,
+    "is_discovery": true
+  },
+  {
+    "key": "ming_great_wall",
+    "name": "万里长城",
+    "category": "奇迹",
+    "description": "明代修筑的砖石结构长城，不仅是边防防线，更是中华工程技术的丰碑。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true,
+    "milestone": 2
+  },
+  {
+    "key": "roman_concrete",
+    "name": "混凝土",
+    "category": "材料",
+    "description": "由石灰、火山灰、砂石混合而成的古代混凝土，干燥后异常坚固，带有灰白色的斑驳质感。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "罗马万神殿",
+    "key": "pantheon",
+    "category": "建筑",
+    "description": "宏伟的穹顶建筑，巨大的圆形拱顶在没有现代机械的情况下精确落成，象征着罗马帝国的辉煌。",
+    "type": [
+      "material",
+      "building"
+    ]
+  },
+  {
+    "name": "埃菲尔铁塔",
+    "key": "eiffel_tower",
+    "category": "建筑",
+    "description": "一座由锻铁构成的宏伟塔楼，高耸入云，象征着工业时代的辉煌。",
+    "type": [
+      "material",
+      "building"
+    ]
+  },
+  {
+    "name": "铆钉",
+    "key": "rivet",
+    "category": "材料",
+    "description": "小巧而坚固的金属连接件，用于将钢梁紧密固定在一起。",
+    "type": [
+      "material"
+    ]
   }
 ]

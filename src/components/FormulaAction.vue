@@ -54,9 +54,9 @@
     :required_techs="data.required_techs"
     :time_required="timeRequired"
   >
-    <div class="relative inline-flex formula">
+    <div class="relative inline-flex formula w-full">
       <button
-        class="btn btn-soft w-[10em]"
+        class="btn btn-soft w-full"
         :disabled="!canPerform"
         @click="emit('click', data)"
       >

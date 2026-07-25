@@ -16,6 +16,48 @@
     "time_required": 10
   },
   {
+    "name": "石材加工技术",
+    "key": "stone_masonry",
+    "description": "掌握了切割和打磨大型石料的技术，能够制作规整的建筑石材，为大型工程奠定基础。",
+    "required_items": [
+      {
+        "key": "stone",
+        "quantity": 50
+      },
+      {
+        "key": "wood",
+        "quantity": 20
+      }
+    ],
+    "required_techs": [
+      "stone_tool_crafting"
+    ],
+    "time_required": 120
+  },
+  {
+    "key": "rammed_earth_technology",
+    "name": "夯土版筑",
+    "description": "掌握了用木板夹土夯实的板筑技术，并结合砖石砌筑工艺，能够建造大型防御工事。",
+    "time_required": 300,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 5
+      },
+      {
+        "key": "cut_stone",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "stone_masonry"
+    ]
+  },
+  {
     "name": "木材加工",
     "key": "wood_processing",
     "description": "学会了如何将原木分解加工为更规整的材料。",
@@ -55,6 +97,26 @@
     ],
     "time_required": 12,
     "milestone": "research_pottery"
+  },
+  {
+    "key": "mold_making",
+    "name": "模具制造",
+    "description": "掌握了利用细致粘土制作阴阳模的翻砂铸造技术，能够制造复杂的器物。",
+    "time_required": 60,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 10
+      },
+      {
+        "key": "bronze",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "pottery",
+      "bronze_tool_crafting"
+    ]
   },
   {
     "name": "树皮揉制",
@@ -562,5 +624,34 @@
     "required_techs": [
       "electrochemistry"
     ]
+  },
+  {
+    "key": "roman_architecture",
+    "name": "混凝土制造技术",
+    "description": "掌握了混凝土配制的技术，能够建造大型建筑。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "stone",
+        "quantity": 10
+      },
+      {
+        "key": "cement",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "stone_masonry"
+    ]
+  },
+  {
+    "name": "钢结构建筑技术",
+    "key": "steel_construction",
+    "description": "掌握了利用钢梁和铆接技术建造大型结构的能力。",
+    "required_techs": [
+      "high_temp_furnace",
+      "iron_tool_crafting"
+    ],
+    "time_required": 120
   }
 ]
