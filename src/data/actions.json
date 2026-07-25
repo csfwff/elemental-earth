@@ -1356,6 +1356,9 @@
         "probability": 900
       }
     ],
+    "required_techs": [
+      "stone_tool_crafting"
+    ],
     "map": [
       "river_side"
     ]
