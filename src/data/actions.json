@@ -1343,10 +1343,12 @@
     ]
   },
   {
-    "name": "采集糯米",
     "key": "forage_sticky_rice",
+    "name": "采集糯米",
     "category": "采集",
     "description": "在河边湿地采集野生稻谷，获得糯米。",
+    "time_required": 10,
+    "required_items": [],
     "rewards": [
       {
         "key": "sticky_rice",
@@ -1354,7 +1356,6 @@
         "probability": 900
       }
     ],
-    "time_required": 10,
     "map": [
       "river_side"
     ]
