@@ -36,7 +36,7 @@ export const useStateStore = defineStore('state', () => {
     switchStartTime: 0,
     switchDuration: 0,
     elements: [],
-    currentEra: 'stone',
+    currentEra: '',
     completedMilestones: [],
     allowedMapKeys: null,
     eraDetailsSeen: false,
@@ -51,7 +51,7 @@ export const useStateStore = defineStore('state', () => {
   const getState = computed(() => state);
 
   /** 当前时代数据 */
-  const currentEra = computed<IEra | undefined>(() => getEra(state.currentEra))
+  const currentEra = computed<IEra | undefined>(() => getEra(state.currentEra || 'stone'))
 
   /** 曼哈顿距离 -> 耗时毫秒的倍率，随时代演进减少 */
   const timePerDistance = computed(() => {

@@ -26,7 +26,7 @@
   </div>
 
   <div v-else-if="appStore.isReady && tutorialStore.isTutorialActive && tutorialStore.currentStepData" 
-    class="fixed inset-0 z-[90] pointer-events-none overflow-hidden">
+    class=" inset-0 z-[90] pointer-events-none overflow-hidden">
     
     <!-- 全屏镂空遮罩 (四块拼接，确保中间洞口可点击) -->
     <template v-if="spotlightRect">
@@ -56,40 +56,41 @@
     <div v-else class="absolute inset-0 bg-base-300/50 pointer-events-none"></div>
 
     <!-- 引导面板 -->
-    <div 
-      class="absolute z-10 w-[calc(100%-2rem)] max-w-sm pointer-events-auto flex items-start gap-4 transition-all duration-300"
-      :style="panelPosition"
-    >
-      <div class="bg-base-100 shadow-2xl border-l-4 border-l-primary p-4 rounded-r-lg flex-1">
-        <div class="flex items-center gap-2 mb-1">
-          <span class="badge badge-primary badge-sm">教程 {{ tutorialStore.currentStep }}/{{ tutorialStore.stepsCount }}</span>
-          <h3 class="font-bold text-lg">{{ tutorialStore.currentStepData.title }}</h3>
-        </div>
-        <p class="text-sm opacity-90">{{ tutorialStore.currentStepData.content }}</p>
-        
-        <div class="mt-4 flex items-center justify-between">
-          <div class="flex gap-2">
-            <button 
-              class="btn btn-xs btn-outline" 
-              :disabled="tutorialStore.currentStep <= 1"
-              @click="tutorialStore.currentStep--"
-            >
-              上一步
-            </button>
-            <button 
-              class="btn btn-xs btn-outline" 
-              :disabled="tutorialStore.currentStep >= tutorialStore.stepsCount || tutorialStore.isNextStepDisabled"
-              @click="tutorialStore.currentStep++"
-            >
-              下一步
-            </button>
-          </div>
-
-          <button class="btn btn-xs btn-ghost gap-1" @click="tutorialStore.skipTutorial">
-            <Icon icon="mdi:close" class="text-xs" />
-            跳过教程
+  </div>
+  <div 
+    v-if="appStore.isReady && tutorialStore.isTutorialActive && tutorialStore.currentStepData"
+    class="fixed z-110 w-[calc(100%-2rem)] max-w-sm pointer-events-auto flex items-start gap-4 transition-all duration-300"
+    :style="panelPosition"
+  >
+    <div class="bg-base-100 shadow-2xl border-l-4 border-l-primary p-4 rounded-r-lg flex-1">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="badge badge-primary badge-sm">教程 {{ tutorialStore.currentStep }}/{{ tutorialStore.stepsCount }}</span>
+        <h3 class="font-bold text-lg">{{ tutorialStore.currentStepData.title }}</h3>
+      </div>
+      <p class="text-sm opacity-90">{{ tutorialStore.currentStepData.content }}</p>
+      
+      <div class="mt-4 flex items-center justify-between">
+        <div class="flex gap-2">
+          <button 
+            class="btn btn-xs btn-outline" 
+            :disabled="tutorialStore.currentStep <= 1"
+            @click="tutorialStore.currentStep--"
+          >
+            上一步
+          </button>
+          <button 
+            class="btn btn-xs btn-outline" 
+            :disabled="tutorialStore.currentStep >= tutorialStore.stepsCount || tutorialStore.isNextStepDisabled"
+            @click="tutorialStore.currentStep++"
+          >
+            下一步
           </button>
         </div>
+
+        <button class="btn btn-xs btn-ghost gap-1" @click="tutorialStore.skipTutorial">
+          <Icon icon="mdi:close" class="text-xs" />
+          跳过教程
+        </button>
       </div>
     </div>
   </div>

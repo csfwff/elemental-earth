@@ -17,7 +17,7 @@ const taskStore = useTaskStore()
 const currentTargetEra = computed(() => stateStore.currentEra)
 const displayEra = computed(() => {
   const order = currentTargetEra.value?.order || 0
-  if (order === 0) return currentTargetEra.value
+  if (order === 0) return null
   return Eras.find(e => e.order === order - 1)
 })
 
@@ -85,16 +85,16 @@ function openEraModal() {
         <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary"></Icon>
         <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
         <div 
-          v-if="displayEra" 
         >
           <div 
+            id="header-era-tag"
             class="badge badge-soft badge-accent border-accent gap-1 ml-2 cursor-pointer relative tooltip tooltip-bottom indicator overflow-hidden bg-transparent!"
             @click="openEraModal"
             data-tip="点击查看纪元进度"
           >
             <span class="absolute top-0 left-0 flex w-full h-full opacity-20" :style="eraBadgeStyle"></span>
-            <Icon :icon="displayEra.icon" class="text-sm z-1" />
-            <span v-if="!appStore.isMobile" class="z-1 font-bold">{{ displayEra.name }}</span>
+            <Icon :icon="displayEra?.icon || 'tabler:question-mark'" class="text-sm z-1" />
+            <span v-if="!appStore.isMobile" class="z-1 font-bold">{{ displayEra?.name || '蛮荒时代' }}</span>
             <span v-if="!stateStore.state.eraDetailsSeen" class="indicator-item status status-error animate-pulse mr-2 mt-1"></span>
           </div>
         </div>

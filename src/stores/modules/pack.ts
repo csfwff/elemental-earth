@@ -129,9 +129,9 @@ export const usePackStore = defineStore('pack', () => {
           const maxDur = itemData.durable ?? 1;
           const newQty = Math.ceil(use / maxDur);
           const newDur = use % maxDur || maxDur;
-          items.push({ name: itemData.name, key: itemKey, quantity: newQty, durable: newDur });
+          items.unshift({ name: itemData.name, key: itemKey, quantity: newQty, durable: newDur });
         } else {
-          items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
+          items.unshift({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
         }
         discoveredItems.add(itemKey);
         // 重大发现物品：触发命名弹窗（仅硬核模式开启时触发）

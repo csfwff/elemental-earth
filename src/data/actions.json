@@ -1357,7 +1357,8 @@
       }
     ],
     "required_techs": [
-      "stone_tool_crafting"
+      "stone_tool_crafting",
+      "stone_masonry"
     ],
     "map": [
       "river_side"

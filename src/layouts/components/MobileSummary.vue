@@ -20,23 +20,38 @@ const summaryItems = computed(() => {
 
 const displayTasks = computed(() => {
   const allTasks = taskStore.getTasks
-  if (!appStore.foldTasks) return allTasks.value.map(t => ({ task: t, count: 1 }))
+  if (!appStore.foldTasks) return allTasks.value.map(t => ({ task: t, count: 1, ids: [t.id] }))
   
-  const groups: { task: any; count: number }[] = []
+  const groups: { task: any; count: number; ids: (string | number)[] }[] = []
   for (const t of allTasks.value) {
     const last = groups[groups.length - 1]
     if (last && last.task.name === t.name && last.task.type === t.type && last.task.key === t.key) {
       last.count++
+      last.ids.push(t.id)
     } else {
-      groups.push({ task: t, count: 1 })
+      groups.push({ task: t, count: 1, ids: [t.id] })
     }
   }
   return groups
 })
+
+function removeTasks(group: { task: any; count: number; ids: (string | number)[] }) {
+  const taskName = group.task.name
+  const isBatch = group.count > 1
+  const confirmMsg = isBatch 
+    ? `确定要取消全部 ${group.count} 个「${taskName}」任务吗？\n取消后将返还所有材料。`
+    : `确定要取消任务「${taskName}」吗？\n取消后将返还所有材料。`
+
+  // 实验室公式或批量任务需要确认
+  if ((group.task.type === 'lab' || isBatch) && !confirm(confirmMsg)) return
+
+  const toRemove = [...group.ids].reverse()
+  toRemove.forEach(id => taskStore.removeTask(id))
+}
 </script>
 
 <template>
-  <div v-if="showSummary" class="flex flex-col gap-1 p-2 bg-base-200/50 border-b border-base-300 text-xs shadow-inner">
+  <div v-if="showSummary" class="flex flex-col gap-1 p-2 bg-base-200/50 border-b border-base-300 text-xs shadow-inner relative z-91">
     <!-- 背包摘要 (左侧栏关闭时显示) -->
     <div v-if="!appStore.leftSidebarOpen" class="flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
       <Icon icon="raphael:package" class="opacity-40 flex-none" />
@@ -58,6 +73,7 @@ const displayTasks = computed(() => {
         <div v-for="(item, index) in displayTasks" :key="index" class="badge badge-sm badge-primary gap-1 px-1.5 h-6 text-[10px] flex-none">
           <span class="max-w-24 truncate">{{ item.task.name }}</span>
           <span v-if="item.count > 1" class="opacity-70 font-mono">x{{ item.count }}</span>
+          <Icon icon="tabler:x" class="opacity-40 flex-none cursor-pointer hover:opacity-100" @click="removeTasks(item)" />
         </div>
       </section>
       <span v-if="displayTasks.length === 0" class="opacity-50 text-[10px] badge">无</span>

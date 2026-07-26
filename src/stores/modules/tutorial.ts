@@ -35,7 +35,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
       isTutorialActive.value = true
       currentStep.value = storage.getItem<number>('tutorial_step') || 1
       maxReachedStep.value = storage.getItem<number>('tutorial_max_step') || currentStep.value
-      stateStore.state.allowedMapKeys = currentStep.value < 8 ? ['river_side', 'mountain', 'forest'] : null
+      stateStore.state.allowedMapKeys = currentStep.value < 9 ? ['river_side', 'mountain', 'forest'] : null
     }
   }
 
@@ -98,19 +98,29 @@ export const useTutorialStore = defineStore('tutorial', () => {
       target: 'tab-tech'
     },
     {
-      title: '第六步：实验室探秘',
-      content: '切换回“河边”并执行“打水”。然后进入“实验室”，按顺序选择容器、材料（1泥土+1水）和操作（混合），获取粘土。',
+      title: '第六步：获取水源',
+      content: '粘土的制作需要水。请先切换到“河边”，执行“打水”行动收集一些水。',
+      target: 'action-fetch_water'
+    },
+    {
+      title: '第七步：实验室探秘',
+      content: '现在进入“实验室”，按顺序选择容器、材料（1泥土+1水）和操作（搅拌），获取粘土。实验成功获取配方后即可进入下一步。',
       target: 'tab-lab'
     },
     {
-      title: '第七步：寻找燧石',
-      content: '继续执行“挖掘”行动，直到获取 7 个燧石。燧石是开启火种的关键材料。',
+      title: '第八步：寻找燧石',
+      content: '继续执行“挖掘”行动，挖掘可能随机掉落不同的矿物，请挖掘直到获取 7 个燧石。燧石是开启火种的关键材料。',
       target: 'action-mining'
     },
     {
-      title: '第八步：开启新时代',
+      title: '第九步：开启新时代',
       content: '在“科技”页解锁“火种制作”，然后在“行动”页制作一个“火种”。制作成功后即可跨入石器时代！',
       target: 'tab-tech'
+    },
+    {
+      title: '第十步：纪元里程碑',
+      content: '恭喜进入新时代！你可以随时点击顶部的时代标签（显示“石器时代”处），查看当前时代的所有里程碑和进化进度。',
+      target: 'header-era-tag'
     }
   ]
 
@@ -162,35 +172,45 @@ export const useTutorialStore = defineStore('tutorial', () => {
     }
 
     if (s === 6) {
-      const waterQty = packStore.getItemQuantity('water')
-      if (waterQty < 1) {
-        if (!isHome) return { ...step, target: 'tab-home' }
-        if (stateStore.state.map !== 'river_side') return { ...step, target: 'header-map-switch' }
-        return { ...step, target: 'action-fetch_water' }
-      }
+      if (!isHome) return { ...step, target: 'tab-home' }
+      if (stateStore.state.map !== 'river_side') return { ...step, target: 'header-map-switch' }
+      return { ...step, target: 'action-fetch_water' }
+    }
+
+    if (s === 7) {
       if (!isLab) return { ...step, target: 'tab-lab' }
       
       // 实验室动态引导
       if (!labStore.selectedContainerKey) return { ...step, target: 'lab-step-1' }
-      if (labStore.selectedMaterials.size === 0) {
+
+      const materials = labStore.selectedMaterials
+      const hasMud = (materials.get('mud') || 0) >= 1
+      const hasWater = (materials.get('water') || 0) >= 1
+      const exactMaterials = materials.size === 2 && hasMud && hasWater
+
+      if (!exactMaterials) {
         return { ...step, content: '请点击“添加材料”，选择 1 份“泥土”和 1 份“水”。', target: 'lab-step-2' }
       }
-      if (!labStore.selectedOperationKey) {
+      if (labStore.selectedOperationKey !== 'stirring') {
         return { ...step, content: '材料已就绪，请在“3.选择操作”中点击“搅拌”。', target: 'lab-step-3' }
       }
-      // 当选择操作后，3.5 追加操作会出现，直接引导至底部的开始实验
+      // 当选择正确操作后，引导至底部的开始实验
       return { ...step, content: '“3.5追加操作”是可选项，本次实验不需要。直接点击底部的“开始实验”按钮即可！', target: 'lab-execute-btn' }
     }
 
-    if (s === 7) {
+    if (s === 8) {
       return isHome ? { ...step, target: 'action-mining' } : { ...step, target: 'tab-home' }
     }
 
-    if (s === 8) {
+    if (s === 9) {
       if (packStore.techs.includes('fire_starting')) {
         return isHome ? { ...step, target: 'action-craft_fire_seed' } : { ...step, target: 'tab-home' }
       }
       return isTech ? { ...step, target: 'tech-fire_starting' } : { ...step, target: 'tab-tech' }
+    }
+
+    if (s === 10) {
+      return { ...step, target: 'header-era-tag' }
     }
 
     return step
@@ -223,15 +243,19 @@ export const useTutorialStore = defineStore('tutorial', () => {
       return !(hasTech('wood_processing') && hasItem('wooden_bucket'))
     }
     if (s === 6) {
-      // Step 6 (Lab) condition is handled manually via the "Next" button in the overlay
-      // It's always enabled if we reached here
-      return false
+      return !(getQty('water') >= 1)
     }
     if (s === 7) {
-      return !(getQty('flint') >= 7)
+      return !packStore.provenFormulas.includes('clay_production')
     }
     if (s === 8) {
+      return !(getQty('flint') >= 7)
+    }
+    if (s === 9) {
       return !(hasTech('fire_starting') && hasItem('fire_seed'))
+    }
+    if (s === 10) {
+      return !stateStore.state.eraDetailsSeen
     }
     
     return false
@@ -248,8 +272,8 @@ export const useTutorialStore = defineStore('tutorial', () => {
         storage.setItem('tutorial_max_step', val)
       }
 
-      // On step 7 or above, allow all maps
-      if (val >= 7) {
+      // On step 8 or above, allow all maps
+      if (val >= 8) {
         stateStore.state.allowedMapKeys = null
       } else {
         stateStore.state.allowedMapKeys = ['river_side', 'mountain', 'forest']
@@ -289,17 +313,31 @@ export const useTutorialStore = defineStore('tutorial', () => {
         currentStep.value = 6
       }
     } else if (currentStep.value === 6) {
-      // Step 6 (Lab) is mandatory even if clay exists. 
-      // User must manually click "Next".
+      // Must have water
+      if (getQty('water') >= 1) {
+        currentStep.value = 7
+      }
     } else if (currentStep.value === 7) {
-      if (getQty('flint') >= 7) {
+      // Must have proven clay formula
+      if (packStore.provenFormulas.includes('clay_production')) {
         currentStep.value = 8
       }
     } else if (currentStep.value === 8) {
+      if (getQty('flint') >= 7) {
+        currentStep.value = 9
+      }
+    } else if (currentStep.value === 9) {
       // Final step: fire starting tech and fire seed item
       if (hasTech('fire_starting') && hasItem('fire_seed')) {
-         completeTutorial()
-         stateStore.checkMilestone('craft_fire_seed')
+        // Prepare to move to step 10, but wait for era transition animation to be closed if it's active
+        if (!stateStore.pendingEraTransition) {
+          // If we are already past Stone Age in state but step is still 9, progress to 10
+          currentStep.value = 10
+        }
+      }
+    } else if (currentStep.value === 10) {
+      if (stateStore.state.eraDetailsSeen) {
+        completeTutorial()
       }
     }
   }, { deep: true })

@@ -25,7 +25,7 @@
             :class="{'tab-active': $route.name === tab.name }"
         >
             <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
-            <span class="indicator">
+            <span class="indicator hidden sm:inline">
                 <span v-if="tab.name === 'Manuscripts' && fragmentStore.hasUnread" class="indicator-item status status-error"></span>
                 <span class="hidden sm:inline">{{ tab.label }}</span>
             </span>
