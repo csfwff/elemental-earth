@@ -1004,7 +1004,7 @@
     ],
     "products": [
       {
-        "key": "platinum_ingot",
+        "key": "crude_platinum_sand",
         "multiple": 1
       },
       {
@@ -1839,7 +1839,7 @@
     "required_items": [
       {
         "key": "molybdenite",
-        "quantity": 1,
+        "quantity": 2,
         "isMain": true
       }
     ],
@@ -1852,16 +1852,16 @@
     "products": [
       {
         "key": "molybdenum_trioxide",
-        "multiple": 1
+        "multiple": 2
       },
       {
         "key": "sulfur_dioxide",
-        "multiple": 1,
+        "multiple": 2,
         "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "molybdenum_roaster_dust",
-        "multiple": 0.5
+        "multiple": 1
       }
     ],
     "fragment_description": "在有氧条件下对#molybdenite#进行$roasting$，使其氧化转化为#molybdenum_trioxide#并释放#sulfur_dioxide#气体。",
@@ -2019,7 +2019,7 @@
     "required_items": [
       {
         "key": "tellurium_dioxide",
-        "quantity": 2,
+        "quantity": 1,
         "isMain": true
       },
       {
@@ -2038,7 +2038,7 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 2,
+        "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
     ]
@@ -2127,120 +2127,132 @@
     "required_era": "alchemy"
   },
   {
-    "name": "焙烧沥青铀矿",
-    "key": "roast_pitchblende",
-    "description": "将沥青铀矿在窑炉中焙烧，使其中的铀转化为易溶的氧化物。",
+    "key": "uranium_leaching",
+    "name": "硝酸浸铀",
+    "description": "用硝酸溶解沥青铀矿，得到硝酸铀酰溶液。",
+    "fragment_description": "将#pitchblende#粉碎后浸泡在#nitric_acid#中，通过氧化酸浸作用将铀元素提取为#uranyl_nitrate#。",
+    "time_required": 40,
+    "required_era": "atomic_age",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "pitchblende",
         "quantity": 1,
         "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 3
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 300,
     "products": [
       {
-        "key": "uranium_oxide",
+        "key": "uranyl_nitrate",
         "multiple": 1
       }
-    ],
-    "fragment_description": "对#pitchblende#进行长时间的$roasting$处理，使矿石内部的铀元素充分氧化转化为#uranium_oxide#以便后续分离。",
-    "required_era": "alchemy"
+    ]
   },
   {
-    "key": "reduce_uranium_oxide",
-    "name": "还原氧化铀",
-    "description": "用碳在高温下还原氧化铀，得到金属铀。",
-    "fragment_description": "使用还原剂在极高温度下还原#uranium_oxide#，通过$roasting$反应制得高密度的金属#uranium#。",
+    "key": "yellowcake_precipitation",
+    "name": "重铀酸钠沉淀",
+    "description": "向硝酸铀酰溶液中加入碳酸钠，析出重铀酸钠（黄饼的主要成分）。",
+    "fragment_description": "向含铀的#uranyl_nitrate#溶液中滴加#sodium_carbonate#进行$precipitation$，回收得到亮黄色的#sodium_diuranate#固体。",
     "time_required": 20,
-    "required_era": "alchemy",
-    "required_container": "crucible",
+    "required_era": "atomic_age",
+    "required_container": "reaction_kettle",
     "required_actions": {
-      "key": "roasting",
+      "key": "stirring",
       "min": 1
     },
     "required_items": [
       {
-        "key": "uranium_oxide",
+        "key": "uranyl_nitrate",
         "quantity": 1,
         "isMain": true
       },
       {
-        "key": [
-          "charcoal",
-          "coal",
-          "coke"
-        ],
+        "key": "sodium_carbonate",
         "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "sodium_diuranate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "uranium_reduction",
+    "name": "金属热还原法制铀",
+    "description": "用镁热还原重铀酸钠，制得纯净的金属铀。",
+    "fragment_description": "在高温下利用活泼金属#magnesium#还原#sodium_diuranate#，通过这种经典的金属热反应提取战略物质#uranium#。",
+    "time_required": 60,
+    "required_era": "atomic_age",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "sodium_diuranate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "magnesium",
+        "quantity": 4
       }
     ],
     "products": [
       {
         "key": "uranium",
         "multiple": 1
-      },
-      {
-        "key": "carbon_monoxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting"
       }
     ]
   },
   {
-    "name": "焙烧金红石制二氧化钛",
     "key": "roast_rutile",
-    "description": "将金红石与焦炭混合后高温焙烧，得到纯净的二氧化钛。",
+    "name": "碾磨金红石制二氧化钛",
+    "description": "将金红石碾磨后高温焙烧，得到活化的二氧化钛。",
+    "fragment_description": "对#rutile#矿石进行$grinding$高温活化处理，使其转化为易于后续化学处理的#titanium_dioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "grinding",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "rutile",
         "quantity": 2,
         "isMain": true
-      },
-      {
-        "key": [
-          "charcoal",
-          "coal",
-          "coke"
-        ],
-        "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "titanium_dioxide",
         "multiple": 2
-      },
-      {
-        "key": "carbon_dioxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "fragment_description": "对#rutile#矿石进行高温$roasting$活化处理，使其转化为易于后续化学处理的#titanium_dioxide#。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
-    "key": "reduce_titanium_dioxide",
-    "name": "还原二氧化钛制钛",
-    "description": "在高温下用镁还原二氧化钛，得到海绵钛。",
-    "fragment_description": "在惰性气氛或高温下利用强还原剂（如#charcoal#）处理#titanium_dioxide#，还原制取金属#titanium#。",
-    "time_required": 20,
+    "key": "chlorinate_rutile",
+    "name": "金红石氯化",
+    "description": "金红石与焦炭和氯气共热，生成四氯化钛。",
+    "fragment_description": "将#titanium_dioxide#与#charcoal#混合后通入#chlorine#，通过库尔兰反应生成易挥发的液体#titanium_tetrachloride#。",
+    "time_required": 30,
     "required_era": "modern_chem",
-    "required_container": "crucible",
+    "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
       "min": 1
@@ -2248,12 +2260,51 @@
     "required_items": [
       {
         "key": "titanium_dioxide",
-        "quantity": 2,
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 2
+      },
+      {
+        "key": "chlorine",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "titanium_tetrachloride",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 2,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "key": "reduce_titanium_tetrachloride",
+    "name": "克罗尔法制钛",
+    "description": "用镁还原四氯化钛，得到海绵钛。",
+    "fragment_description": "利用活泼金属#magnesium#还原#titanium_tetrachloride#，在保护气氛下提取海绵状金属#titanium#并回收#magnesium_chloride#。",
+    "time_required": 45,
+    "required_era": "modern_chem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "titanium_tetrachloride",
+        "quantity": 1,
         "isMain": true
       },
       {
         "key": "magnesium",
-        "quantity": 1
+        "quantity": 2
       }
     ],
     "products": [
@@ -2262,20 +2313,28 @@
         "multiple": 1
       },
       {
-        "key": "magnesium_oxide",
-        "multiple": 1
+        "key": "magnesium_chloride",
+        "multiple": 2
       }
     ]
   },
   {
     "name": "焙烧铬铁矿",
     "key": "roast_chromite",
-    "description": "将铬铁矿放入窑炉中高温焙烧，使其中的铬转化为氧化铬。",
+    "description": "将铬铁矿与苏打、石灰石混合并在空气中氧化焙烧，使其中的铬转化为易溶于水的铬酸钠。",
     "required_items": [
       {
         "key": "chromite",
         "quantity": 3,
         "isMain": true
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      },
+      {
+        "key": "limestone",
+        "quantity": 1
       }
     ],
     "required_container": "kiln",
@@ -2289,7 +2348,7 @@
     "time_required": 20,
     "products": [
       {
-        "key": "chromium_oxide",
+        "key": "sodium_chromate",
         "multiple": 2
       },
       {
@@ -2297,7 +2356,44 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "在窑炉中对#chromite#进行氧化$roasting$，使其内部结构破坏并生成易溶的#chromium_oxide#。",
+    "fragment_description": "将#chromite#与#sodium_carbonate#及#limestone#混合，在空气中进行氧化$roasting$，生成鲜黄色的#sodium_chromate#及炉渣。",
+    "required_era": "alchemy"
+  },
+  {
+    "name": "还原铬酸钠",
+    "key": "reduce_chromate",
+    "description": "将铬酸钠通过酸化转化为氧化铬，之后用焦炭还原得到金属铬。",
+    "required_items": [
+      {
+        "key": "sodium_chromate",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": [
+          "charcoal",
+          "coal",
+          "coke"
+        ],
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "chromium",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#sodium_chromate#还原并进一步提炼，析出坚硬的#chromium#单质。",
     "required_era": "alchemy"
   },
   {
@@ -2411,20 +2507,20 @@
       },
       {
         "key": "slag",
-        "multiple": 2
+        "multiple": 1
       }
     ]
   },
   {
-    "key": "reduce_beryllium_oxide",
-    "name": "还原氧化铍",
-    "description": "在坩埚中用碳高温还原氧化铍，得到金属铍和一氧化碳。",
-    "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。",
-    "time_required": 30,
+    "key": "chlorinate_beryllium_oxide",
+    "name": "氧化铍氯化",
+    "description": "氧化铍、焦炭与氯气高温反应生成氯化铍。",
+    "fragment_description": "将#beryllium_oxide#与#charcoal#混合后通入#chlorine#，生成挥发性的#beryllium_chloride#。",
+    "time_required": 25,
     "required_era": "atomic_age",
     "required_container": "crucible",
     "required_actions": {
-      "key": "dry_distillation",
+      "key": "roasting",
       "min": 1
     },
     "required_items": [
@@ -2434,12 +2530,47 @@
         "isMain": true
       },
       {
-        "key": [
-          "charcoal",
-          "coal",
-          "coke"
-        ],
+        "key": "charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
         "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "beryllium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "key": "reduce_beryllium_chloride",
+    "name": "金属热还原法制铍",
+    "description": "用镁还原熔融的氯化铍得到金属铍。",
+    "fragment_description": "利用活泼金属#magnesium#在高温下还原#beryllium_chloride#，提取轻质金属#beryllium#并副产#magnesium_chloride#。",
+    "time_required": 30,
+    "required_era": "atomic_age",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "beryllium_chloride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "magnesium",
+        "quantity": 1
       }
     ],
     "products": [
@@ -2448,9 +2579,8 @@
         "multiple": 1
       },
       {
-        "key": "carbon_monoxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "key": "magnesium_chloride",
+        "multiple": 1
       }
     ]
   },
@@ -2774,9 +2904,9 @@
   },
   {
     "key": "carbonate_barium_sulfide",
-    "name": "碳酸化硫化钡",
-    "description": "将硫化钡与碳酸钠溶液混合，沉淀出碳酸钡。",
-    "fragment_description": "通过对#barium_sulfide#进行碳酸化处理，利用溶度积差异转化生成沉淀#barium_carbonate#。",
+    "name": "硫化钡转化",
+    "description": "将硫化钡与碳酸钠溶液混合，沉淀出碳酸钡，副产硫化钠。",
+    "fragment_description": "将#barium_sulfide#与#sodium_carbonate#混合，利用溶度积差异转化生成沉淀#barium_carbonate#并副产#sodium_sulfide#。",
     "time_required": 15,
     "required_era": "electrochem",
     "required_container": "clay_pot",
@@ -2798,6 +2928,10 @@
     "products": [
       {
         "key": "barium_carbonate",
+        "multiple": 1
+      },
+      {
+        "key": "sodium_sulfide",
         "multiple": 1
       }
     ]
@@ -3045,9 +3179,9 @@
     ]
   },
   {
-    "name": "焙烧天青石制氧化锶",
+    "name": "还原天青石制硫化锶",
     "key": "roast_celestine",
-    "description": "将天青石与焦炭混合焙烧，还原生成硫化锶，再转化为氧化锶。",
+    "description": "将天青石与焦炭混合焙烧，硫酸锶被还原生成硫化锶。",
     "required_items": [
       {
         "key": "celestine",
@@ -3060,7 +3194,7 @@
           "coal",
           "coke"
         ],
-        "quantity": 1
+        "quantity": 2
       }
     ],
     "required_container": "kiln",
@@ -3074,21 +3208,53 @@
     "time_required": 120,
     "products": [
       {
-        "key": "strontium_oxide",
+        "key": "strontium_sulfide",
         "multiple": 1
       },
       {
-        "key": "sulfur_dioxide",
-        "multiple": 1,
+        "key": "carbon_monoxide",
+        "multiple": 2,
         "required_chain_operation": "gas_collecting"
-      },
-      {
-        "key": "slag",
-        "multiple": 0.2
       }
     ],
-    "fragment_description": "将#celestine#（天青石）与还原剂混合后进行高温$roasting$，使其主要成分硫酸锶转化为#strontium_sulfide#。",
+    "fragment_description": "将#celestine#（天青石）与还原剂混合后进行高温$roasting$，使其主要成分硫酸锶转化为#strontium_sulfide#并放出#carbon_monoxide#。",
     "required_era": "alchemy"
+  },
+  {
+    "name": "硫化锶酸浸制氯化锶",
+    "key": "leach_strontium_sulfide",
+    "description": "用盐酸浸取硫化锶，生成氯化锶并放出硫化氢气体。",
+    "required_items": [
+      {
+        "key": "strontium_sulfide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
+    "required_techs": [],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "strontium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen_sulfide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "fragment_description": "向#strontium_sulfide#中加入#hydrochloric_acid#进行$stirring$酸浸，得到澄清的#strontium_chloride#溶液并释放出臭鸡蛋气味的#hydrogen_sulfide#。",
+    "required_era": "modern_chem"
   },
   {
     "name": "焙烧菱锶矿制氧化锶",
@@ -3125,9 +3291,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "还原氧化锶制锶",
     "key": "reduce_strontium_oxide",
+    "name": "还原氧化锶制锶",
     "description": "用铝粉在高温下还原氧化锶，得到金属锶。",
+    "fragment_description": "使用强还原剂在极高温下处理#strontium_oxide#，通过还原反应析出金属#strontium#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "strontium_oxide",
@@ -3139,27 +3313,19 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 180,
     "products": [
       {
         "key": "strontium",
-        "multiple": 0.5
+        "multiple": 0.3
       },
       {
         "key": "alumina",
         "multiple": 0.5
       }
     ],
-    "fragment_description": "使用强还原剂在极高温下处理#strontium_oxide#，通过还原反应析出金属#strontium#。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "key": "strontium_nitrate_production",
@@ -4176,7 +4342,8 @@
     "products": [
       {
         "key": "bromine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "distillation"
       }
     ]
   },
@@ -4283,14 +4450,14 @@
     ]
   },
   {
-    "name": "从阳极泥提取碲",
-    "key": "extract_tellurium_from_slime",
-    "description": "阳极泥在提取硒之后，残留的滤渣中仍富含碲，通过碱浸和还原工艺可以回收金属碲。",
+    "name": "阳极泥碱焙烧",
+    "key": "roast_tellurium_slime",
+    "description": "将阳极泥与苏打混匀并在空气中焙烧，使碲转化为易溶的亚碲酸钠块。",
     "required_actions": {
-      "key": "stirring",
+      "key": "roasting",
       "min": 1
     },
-    "required_container": "beaker",
+    "required_container": "kiln",
     "required_items": [
       {
         "key": "anode_slime",
@@ -4299,21 +4466,53 @@
       },
       {
         "key": "alkaline_solution",
-        "quantity": 1,
-        "isMain": true
+        "quantity": 1
       }
     ],
     "time_required": 50,
     "products": [
       {
-        "key": "tellurium",
+        "key": "tellurium_alkali_melt",
         "multiple": 1
       }
     ],
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "fragment_description": "以#anode_slime#为基础原料，添加#alkaline_solution#进行$roasting$碱熔，生成#tellurium_alkali_melt#。",
+    "required_era": "electrochem"
+  },
+  {
+    "name": "碱熔块酸化沉淀",
+    "key": "acid_precipitate_tellurium",
+    "description": "用稀硫酸浸取碱焙烧产物并调整酸度，使二氧化碲沉淀析出。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "tellurium_alkali_melt",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "tellurium_dioxide",
+        "multiple": 0.5
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "fragment_description": "将#tellurium_alkali_melt#溶于水并滴加#dilute_sulfuric_acid#进行$stirring$中和沉淀，过滤得到纯净的#tellurium_dioxide#。",
     "required_era": "electrochem"
   },
   {
@@ -4491,7 +4690,9 @@
     "key": "rubidium_reduction",
     "name": "金属铷还原",
     "description": "在真空和高温条件下，用金属钙还原氯化铷，获得高纯度的金属铷。",
-    "time_required": 120,
+    "fragment_description": "以#rubidium_chloride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
@@ -4511,17 +4712,14 @@
     "products": [
       {
         "key": "rubidium",
-        "multiple": 1,
+        "multiple": 2,
         "required_chain_operation": "condensation"
       },
       {
         "key": "calcium_chloride",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#rubidium_chloride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "rubidium_electrolysis",
@@ -4840,34 +5038,114 @@
     "required_era": "alchemy"
   },
   {
-    "key": "extract_scandium_oxide",
-    "name": "提炼氧化钪",
-    "description": "从拜耳法处理铝土矿后的赤泥残渣中，通过强酸浸出和溶剂萃取，分离出高纯度的氧化钪。",
-    "fragment_description": "以#bauxite_residue#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "time_required": 10,
-    "required_era": "modern_chem",
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
+    "key": "scandium_acid_leaching",
+    "name": "赤泥酸浸",
+    "description": "赤泥与浓硫酸在加热条件下反应，将其中的钪浸出到溶液中。",
     "required_items": [
       {
         "key": "bauxite_residue",
-        "quantity": 2,
+        "quantity": 10,
         "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
+        "quantity": 5
+      }
+    ],
+    "required_actions": {
+      "key": "heating"
+    },
+    "required_container": "kiln",
+    "time_required": 40,
+    "products": [
+      {
+        "key": "scandium_leach_solution",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#bauxite_residue#与#concentrated_sulfuric_acid#混合后进行高温$heating$酸浸，提取出#scandium_leach_solution#。"
+  },
+  {
+    "key": "scandium_ammonia_precipitation",
+    "name": "钪氨水沉淀",
+    "description": "向酸浸液中加入氨水，使钪以氢氧化物形式初步富集沉淀。",
+    "required_items": [
+      {
+        "key": "scandium_leach_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "ammonia_water",
         "quantity": 1
       }
     ],
+    "required_actions": {
+      "key": "precipitation"
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "scandium_concentrate",
+        "multiple": 0.5
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "向#scandium_leach_solution#中加入#ammonia_water#进行$precipitation$，获得#scandium_concentrate#。"
+  },
+  {
+    "key": "scandium_oxalate_precipitation",
+    "name": "草酸沉淀钪",
+    "description": "利用草酸使钪进一步提纯沉淀，生成草酸钪。",
+    "required_items": [
+      {
+        "key": "scandium_concentrate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "precipitation"
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "scandium_oxalate",
+        "multiple": 0.5
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "反应产生的沉淀物中加入#oxalic_acid#，通过$precipitation$转化为#scandium_oxalate#。"
+  },
+  {
+    "key": "scandium_oxalate_roasting",
+    "name": "草酸钪焙烧",
+    "description": "草酸钪热分解生成高纯度的氧化钪。",
+    "required_items": [
+      {
+        "key": "scandium_oxalate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
     "products": [
       {
         "key": "scandium_oxide",
-        "multiple": 0.2
+        "multiple": 0.3
       }
-    ]
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "对#scandium_oxalate#进行高温$roasting$，最终得到高纯度的#scandium_oxide#。"
   },
   {
     "key": "scandium_fluorination",
@@ -5429,12 +5707,16 @@
       },
       {
         "key": "ammonia",
-        "quantity": 1
+        "quantity": 2
       }
     ],
     "products": [
       {
         "key": "ammonium_perrhenate",
+        "multiple": 1
+      },
+      {
+        "key": "slag",
         "multiple": 1
       }
     ],
@@ -5445,7 +5727,7 @@
   {
     "key": "refine_rhenium_step",
     "name": "氢还原提炼铼",
-    "description": "在氢气或还原性气氛下还原高铼酸铵，得到金属铼粉。",
+    "description": "在高纯氢气流中还原高铼酸铵，得到金属铼粉，并伴随氨气产生。",
     "time_required": 30,
     "required_container": "crucible",
     "required_actions": {
@@ -5456,16 +5738,25 @@
         "key": "ammonium_perrhenate",
         "quantity": 1,
         "isMain": true
+      },
+      {
+        "key": "hydrogen",
+        "quantity": 3
       }
     ],
     "products": [
       {
         "key": "rhenium",
         "multiple": 1
+      },
+      {
+        "key": "ammonia",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#ammonium_perrhenate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "fragment_description": "将#ammonium_perrhenate#置于氢气流中进行还原$roasting$，最终提取出高熔点的#rhenium#单质，并排出#ammonia#。",
     "required_era": "alchemy"
   },
   {
@@ -6012,6 +6303,40 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "硝酸钾热分解",
+    "key": "potassium_nitrate_decomposition",
+    "description": "高温焙烧硝酸钾，其分解产物为亚硝酸钾和氧气。",
+    "required_items": [
+      {
+        "key": "potassium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "potassium_nitrite",
+        "multiple": 1
+      },
+      {
+        "key": "oxygen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "fragment_description": "将#potassium_nitrate#加热至熔融并进一步$roasting$，物质发生热分解生成#potassium_nitrite#并放出#oxygen#。",
+    "required_era": "alchemy"
   },
   {
     "name": "硝酸钠制备（碳酸钠法）",
@@ -8636,11 +8961,19 @@
         "key": "charcoal",
         "quantity": 2,
         "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
       }
     ],
     "products": [
       {
         "key": "activated_charcoal",
+        "multiple": 1.5
+      },
+      {
+        "key": "carbon_monoxide",
         "multiple": 1
       }
     ]
@@ -8709,15 +9042,15 @@
     ]
   },
   {
-    "key": "thorium_extraction",
-    "name": "金属钍提取",
-    "description": "利用草酸沉淀与还原反应，从硫酸钍溶液中提取出纯净的金属钍。",
-    "fragment_description": "对#thorium_sulfate_solution#通过$electrolysis$电解还原，最终制得高纯度的#thorium#金属。",
-    "time_required": 60,
+    "key": "thorium_precipitation",
+    "name": "草酸钍沉淀",
+    "description": "向硫酸钍溶液中加入草酸，沉淀出草酸钍。",
+    "fragment_description": "向#thorium_sulfate_solution#中滴加#oxalic_acid#，产出白色难溶的#thorium_oxalate#沉淀。",
+    "time_required": 20,
     "required_era": "atomic_age",
     "required_container": "reaction_kettle",
     "required_actions": {
-      "key": "electrolysis",
+      "key": "stirring",
       "min": 1
     },
     "required_items": [
@@ -8733,8 +9066,68 @@
     ],
     "products": [
       {
+        "key": "thorium_oxalate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "thorium_oxalate_roasting",
+    "name": "草酸钍分解",
+    "description": "高温焙烧草酸钍，分解得到氧化钍。",
+    "fragment_description": "通过对#thorium_oxalate#进行高温$roasting$，使其热分解为化学性质极其稳定的#thorium_oxide#。",
+    "time_required": 30,
+    "required_era": "atomic_age",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thorium_oxalate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "thorium_oxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "thorium_oxide_reduction",
+    "name": "氧化钍还原",
+    "description": "用金属钙还原氧化钍，得到高纯度的金属钍。",
+    "fragment_description": "利用强还原剂#calcium#在极高温下夺取#thorium_oxide#中的氧，析出具有放射性的灰黑色#thorium#金属。",
+    "time_required": 30,
+    "required_era": "atomic_age",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thorium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
         "key": "thorium",
-        "multiple": 0.9
+        "multiple": 1
+      },
+      {
+        "key": "quicklime",
+        "multiple": 2
       }
     ]
   },
@@ -9058,38 +9451,1142 @@
     ]
   },
   {
-    "name": "制作铆钉",
-    "key": "make_rivet",
-    "description": "将钢条加热后放入陶模中锻造成铆钉形状。",
+    "key": "limestone_sulfuric_acid",
+    "name": "石灰石硫酸反应",
+    "description": "石灰石与稀硫酸反应生成石膏和二氧化碳。虽然硫酸钙微溶会覆盖表面，但可简化处理。",
     "required_items": [
       {
-        "key": "steel",
+        "key": "limestone",
         "quantity": 1,
         "isMain": true
       },
       {
-        "key": "pottery_mold",
-        "quantity": 1,
-        "use": 0.1
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
       }
     ],
-    "required_container": "kiln",
     "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
+      "key": "stirring"
     },
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "required_era": "modern_chem",
-    "time_required": 10,
-    "fragment_description": "将 #steel# 插入 $pottery_mold$ 中，放入 $kiln$ 用 $heating$ 加热，取出后得到铆钉。",
+    "time_required": 15,
     "products": [
       {
-        "key": "rivet",
-        "multiple": 10
+        "key": "gypsum",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      },
+      {
+        "key": "water",
+        "multiple": 1
       }
-    ]
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#limestone#与#dilute_sulfuric_acid#混合进行$stirring$，产生#gypsum#并释放#carbon_dioxide#。"
+  },
+  {
+    "key": "lime_sulfuric_acid",
+    "name": "熟石灰中和",
+    "description": "熟石灰与稀硫酸反应生成石膏。",
+    "required_items": [
+      {
+        "key": "slaked_lime",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "gypsum",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 2
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "利用#slaked_lime#中和#dilute_sulfuric_acid#，通过$stirring$生成#gypsum#。"
+  },
+  {
+    "key": "sodium_hydroxide_neutralization",
+    "name": "氢氧化钠中和",
+    "description": "氢氧化钠与稀硫酸反应生成芒硝。",
+    "required_items": [
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "mirabilite",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 2
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "通过#sodium_hydroxide#与#dilute_sulfuric_acid#的$stirring$反应制取#mirabilite#。"
+  },
+  {
+    "key": "potassium_hydroxide_neutralization_sulfuric",
+    "name": "氢氧化钾硫酸中和",
+    "description": "氢氧化钾与稀硫酸反应生成硫酸钾。",
+    "required_items": [
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "potassium_sulfate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 2
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#potassium_hydroxide#与#dilute_sulfuric_acid#进行$stirring$反应，制得#potassium_sulfate#。"
+  },
+  {
+    "key": "potassium_hydroxide_neutralization_hydrochloric",
+    "name": "氢氧化钾盐酸中和",
+    "description": "氢氧化钾与盐酸反应生成氯化钾。",
+    "required_items": [
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "potassium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#potassium_hydroxide#加入#hydrochloric_acid#中进行$stirring$，产出#potassium_chloride#。"
+  },
+  {
+    "key": "ammonia_sulfuric_absorption",
+    "name": "氨气硫酸吸收",
+    "description": "氨气与稀硫酸反应生成硫酸铵。",
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "ammonium_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "利用#dilute_sulfuric_acid#吸收#ammonia#并进行$stirring$，通过酸碱结合生成#ammonium_sulfate#。"
+  },
+  {
+    "key": "ammonia_hydrochloric_absorption",
+    "name": "氨气盐酸吸收",
+    "description": "氨气与盐酸反应生成氯化铵。",
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "ammonium_chloride",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#ammonia#通入#hydrochloric_acid#并配合$stirring$，反应生成白色烟雾状的#ammonium_chloride#。"
+  },
+  {
+    "key": "potassium_hydroxide_neutralization_nitric",
+    "name": "氢氧化钾硝酸中和",
+    "description": "氢氧化钾与硝酸反应生成硝酸钾。",
+    "required_items": [
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "niter",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "通过#potassium_hydroxide#与#nitric_acid#的$stirring$反应，制取高纯度的#niter#。"
+  },
+  {
+    "key": "sodium_hydroxide_neutralization_nitric",
+    "name": "氢氧化钠硝酸中和",
+    "description": "氢氧化钠与硝酸反应生成硝酸钠。",
+    "required_items": [
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "sodium_nitrate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#sodium_hydroxide#与#nitric_acid#发生$stirring$反应，生成#sodium_nitrate#。"
+  },
+  {
+    "key": "zinc_sulfate_sodium_carbonate",
+    "name": "硫酸锌纯碱沉淀",
+    "description": "硫酸锌溶液与碳酸钠反应生成碳酸锌沉淀和芒硝。",
+    "required_items": [
+      {
+        "key": "zinc_sulfate_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "zinc_carbonate",
+        "multiple": 1
+      },
+      {
+        "key": "mirabilite",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#zinc_sulfate_solution#与#sodium_carbonate#混合进行$stirring$，利用复分解反应得到#zinc_carbonate#与#mirabilite#。"
+  },
+  {
+    "key": "copper_oxide_reduction",
+    "name": "碳还原氧化铜",
+    "description": "氧化铜与碳反应生成铜和一氧化碳。",
+    "required_items": [
+      {
+        "key": "copper_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "copper",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "alchemy",
+    "fragment_description": "在高炉或窑炉中对#copper_oxide#与#charcoal#进行$roasting$，还原制取金属#copper#并释放#carbon_monoxide#。"
+  },
+  {
+    "key": "lead_oxide_reduction",
+    "name": "碳还原氧化铅",
+    "description": "氧化铅与碳反应生成铅和一氧化碳。",
+    "required_items": [
+      {
+        "key": "lead_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "lead",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "alchemy",
+    "fragment_description": "对#lead_oxide#与#charcoal#混合物进行$roasting$，通过热还原反应产出金属#lead#。"
+  },
+  {
+    "key": "zinc_oxide_reduction",
+    "name": "碳还原氧化锌",
+    "description": "氧化锌与碳反应生成锌和一氧化碳。",
+    "required_items": [
+      {
+        "key": "zinc_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "zinc",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "alchemy",
+    "fragment_description": "混合#zinc_oxide#与#charcoal#后进行高温$roasting$，在冷凝条件下收集还原出的金属#zinc#。"
+  },
+  {
+    "key": "nickel_oxide_reduction",
+    "name": "碳还原氧化镍",
+    "description": "氧化镍与碳反应生成镍和一氧化碳。",
+    "required_items": [
+      {
+        "key": "nickel_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "blast_furnace",
+    "time_required": 40,
+    "products": [
+      {
+        "key": "nickel",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "在还原气氛下对#nickel_oxide#与#charcoal#进行$roasting$，提取高纯度的金属#nickel#。"
+  },
+  {
+    "key": "tin_oxide_reduction",
+    "name": "碳还原氧化锡",
+    "description": "氧化锡与碳反应生成锡和一氧化碳。",
+    "required_items": [
+      {
+        "key": "tin_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "tin",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "alchemy",
+    "fragment_description": "通过对#tin_oxide#与#charcoal#的$roasting$作用，实现金属#tin#的还原析出。"
+  },
+  {
+    "key": "antimony_oxide_reduction",
+    "name": "碳还原氧化锑",
+    "description": "氧化锑与碳反应生成锑和一氧化碳。",
+    "required_items": [
+      {
+        "key": "antimony_trioxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "antimony",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#antimony_trioxide#与#charcoal#混合后进行$roasting$，通过碳热反应制得金属#antimony#。"
+  },
+  {
+    "key": "cobalt_oxide_reduction",
+    "name": "碳还原氧化钴",
+    "description": "氧化钴与碳反应生成钴和一氧化碳。",
+    "required_items": [
+      {
+        "key": "cobalt_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "blast_furnace",
+    "time_required": 40,
+    "products": [
+      {
+        "key": "cobalt",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "在#blast_furnace#中对#cobalt_oxide#与#charcoal#进行$roasting$处理，产出具有磁性的金属#cobalt#。"
+  },
+  {
+    "key": "copper_displacement_iron",
+    "name": "铁置换铜",
+    "description": "铁与硫酸铜溶液反应生成铜和硫酸亚铁。",
+    "required_items": [
+      {
+        "key": "iron",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "copper_sulfate_solution",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "copper",
+        "multiple": 1
+      },
+      {
+        "key": "iron_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#iron#放入#copper_sulfate_solution#中进行$stirring$，利用置换反应沉淀出金属#copper#并产出#iron_sulfate#。"
+  },
+  {
+    "key": "copper_displacement_zinc",
+    "name": "锌置换铜",
+    "description": "锌与硫酸铜溶液反应生成铜和硫酸锌。",
+    "required_items": [
+      {
+        "key": "zinc",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "copper_sulfate_solution",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "copper",
+        "multiple": 1
+      },
+      {
+        "key": "zinc_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#zinc#与#copper_sulfate_solution#充分进行$stirring$，通过置换反应快速析出#copper#并获得#zinc_sulfate#。"
+  },
+  {
+    "key": "zinc_carbonate_calcination",
+    "name": "碳酸锌焙烧",
+    "description": "碳酸锌受热分解生成氧化锌和二氧化碳。",
+    "required_items": [
+      {
+        "key": "zinc_carbonate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "zinc_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "对#zinc_carbonate#进行$roasting$热分解，产出#zinc_oxide#粉末并释放出#carbon_dioxide#。"
+  },
+  {
+    "key": "lead_carbonate_calcination",
+    "name": "碳酸铅焙烧",
+    "description": "碳酸铅受热分解生成氧化铅和二氧化碳。",
+    "required_items": [
+      {
+        "key": "lead_carbonate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "lead_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "在#kiln#中对#lead_carbonate#进行$roasting$，分解为#lead_oxide#与#carbon_dioxide#。"
+  },
+  {
+    "key": "iron_carbonate_calcination",
+    "name": "碳酸铁焙烧",
+    "description": "碳酸铁受热分解生成氧化铁和二氧化碳。",
+    "required_items": [
+      {
+        "key": "iron_carbonate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "hematite",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "对#iron_carbonate#进行$roasting$热分解，获得#hematite#并释放#carbon_dioxide#。"
+  },
+  {
+    "key": "manganese_carbonate_calcination",
+    "name": "碳酸锰焙烧",
+    "description": "碳酸锰受热分解生成氧化锰和二氧化碳。",
+    "required_items": [
+      {
+        "key": "manganese_carbonate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "pyrolusite",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#manganese_carbonate#放入#kiln#中进行$roasting$，热分解生成#pyrolusite#与#carbon_dioxide#。"
+  },
+  {
+    "key": "iron_sulfate_dry_distillation",
+    "name": "绿矾干馏制硫酸",
+    "description": "硫酸亚铁干馏生成氧化铁、二氧化硫和三氧化硫。",
+    "required_items": [
+      {
+        "key": "iron_sulfate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "dry_distillation"
+    },
+    "required_container": "clay_pot",
+    "time_required": 40,
+    "products": [
+      {
+        "key": "hematite",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "sulfur_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "在密闭容器中对#iron_sulfate#进行$dry_distillation$，分解产出#hematite#、#sulfur_dioxide#与#sulfur_trioxide#。"
+  },
+  {
+    "key": "ammonium_chloride_decomposition",
+    "name": "氯化铵受热分解",
+    "description": "氯化铵受热分解为氨气和盐酸气。",
+    "required_items": [
+      {
+        "key": "ammonium_chloride",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "clay_pot",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "ammonia",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "hydrochloric_acid",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "由于#ammonium_chloride#具有不稳定性，受热即发生$roasting$分解，产生#ammonia#与#hydrochloric_acid#蒸汽。"
+  },
+  {
+    "key": "carbon_dioxide_dissolution",
+    "name": "二氧化碳溶解",
+    "description": "二氧化碳溶于水生成碳酸水。",
+    "required_items": [
+      {
+        "key": "carbon_dioxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "carbonated_water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#carbon_dioxide#与#water#混合进行$stirring$，产出带有微弱酸性的#carbonated_water#。"
+  },
+  {
+    "key": "sulfur_dioxide_dissolution",
+    "name": "二氧化硫溶解",
+    "description": "二氧化硫溶于水生成亚硫酸。",
+    "required_items": [
+      {
+        "key": "sulfur_dioxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "sulfurous_acid",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#sulfur_dioxide#通入#water#中进行$stirring$吸收，制备#sulfurous_acid#溶液。"
+  },
+  {
+    "key": "sulfur_trioxide_concentrated_absorption",
+    "name": "三氧化硫浓硫酸吸收",
+    "description": "三氧化硫溶于浓硫酸生成发烟硫酸。",
+    "required_items": [
+      {
+        "key": "sulfur_trioxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "fuming_sulfuric_acid",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#sulfur_trioxide#通入#concentrated_sulfuric_acid#中进行$stirring$吸收，产出极具腐蚀性的#fuming_sulfuric_acid#。"
+  },
+  {
+    "key": "ammonium_bicarbonate_production",
+    "name": "碳酸氢铵制作",
+    "description": "氨气与二氧化碳和水反应生成碳酸氢铵。",
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "carbon_dioxide",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "ammonium_bicarbonate",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#ammonia#、#carbon_dioxide#与#water#共同进行$stirring$反应，制得#ammonium_bicarbonate#。"
+  },
+  {
+    "key": "hydrogen_sulfide_absorption",
+    "name": "硫化氢碱液吸收",
+    "description": "硫化氢与氢氧化钠反应生成硫化钠和水。",
+    "required_items": [
+      {
+        "key": "hydrogen_sulfide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 2
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "sodium_sulfide",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 2
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "通过#sodium_hydroxide#溶液吸收#hydrogen_sulfide#并进行$stirring$，产出重要的还原剂#sodium_sulfide#。"
+  },
+  {
+    "key": "chlorine_sodium_hydroxide_absorption",
+    "name": "氯气碱液吸收",
+    "description": "氯气与氢氧化钠反应生成次氯酸钠和氯化钠。",
+    "required_items": [
+      {
+        "key": "chlorine",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 2
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "sodium_hypochlorite",
+        "multiple": 1
+      },
+      {
+        "key": "rock_salt",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#chlorine#通入#sodium_hydroxide#中进行$stirring$反应，制取#sodium_hypochlorite#并副产#rock_salt#。"
+  },
+  {
+    "key": "cuprammonium_production",
+    "name": "制备铜氨溶液",
+    "description": "硫酸铜与氨水反应生成铜氨络合物。",
+    "required_items": [
+      {
+        "key": "zinc_sulfate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "ammonia_water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "cuprammonium_solution",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "利用#ammonia_water#溶解铜盐（如#zinc_sulfate#）经$stirring$形成深蓝色的#cuprammonium_solution#。"
+  },
+  {
+    "key": "silver_ammonia_production",
+    "name": "制备银氨溶液",
+    "description": "氯化银与氨水反应生成银氨络合物。",
+    "required_items": [
+      {
+        "key": "silver_chloride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "ammonia_water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "silver_ammonia_solution",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "将#silver_chloride#沉淀溶于#ammonia_water#中进行$stirring$，制取用于银镜反应的#silver_ammonia_solution#。"
+  },
+  {
+    "key": "sodium_aluminate_production",
+    "name": "铝酸钠制备",
+    "description": "氢氧化钠与氧化铝加热生成铝酸钠。",
+    "required_items": [
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "alumina",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "sodium_aluminate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#sodium_hydroxide#与#alumina#混合进行高温$roasting$，反应生成可溶性的#sodium_aluminate#。"
+  },
+  {
+    "key": "potassium_zincate_production",
+    "name": "锌酸钾制备",
+    "description": "氢氧化钾与氧化锌加热生成锌酸钾。",
+    "required_items": [
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "zinc_oxide",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_container": "kiln",
+    "time_required": 30,
+    "products": [
+      {
+        "key": "potassium_zincate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "在高热条件下对#potassium_hydroxide#与#zinc_oxide#进行$roasting$反应，生成呈两性的#potassium_zincate#。"
+  },
+  {
+    "key": "ammonia_water_production",
+    "name": "制备氨水",
+    "description": "氨气溶于水生成氨水。",
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring"
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "ammonia_water",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem",
+    "fragment_description": "使#ammonia#通过#water#进行充分$stirring$吸收，配制成具有碱性的#ammonia_water#。"
   }
 ]

@@ -386,6 +386,15 @@
     "elemental": 16
   },
   {
+    "name": "硫化氢",
+    "key": "hydrogen_sulfide",
+    "category": "气体",
+    "description": "无色气体，具有臭鸡蛋气味，极毒。易通过硫化物与酸反应产生。",
+    "type": [
+      "material"
+    ]
+  },
+  {
     "key": "iron_pickaxe",
     "name": "铁镐",
     "category": "工具",
@@ -1278,6 +1287,15 @@
     ]
   },
   {
+    "name": "含碲碱熔块",
+    "key": "tellurium_alkali_melt",
+    "category": "材料",
+    "description": "粗制碱性熔块，由阳极泥碱熔产生，富含亚碲酸钠。",
+    "type": [
+      "material"
+    ]
+  },
+  {
     "name": "碲",
     "key": "tellurium",
     "category": "材料",
@@ -1384,6 +1402,15 @@
     ]
   },
   {
+    "name": "四氯化钛",
+    "key": "titanium_tetrachloride",
+    "category": "材料",
+    "description": "无色或微黄色的液体，在潮湿空气中强烈发烟。通过金红石与氯气高温反应制得，是克罗尔法制钛的核心中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
     "name": "钛",
     "key": "titanium",
     "category": "材料",
@@ -1412,6 +1439,15 @@
       "material"
     ],
     "is_discovery": true
+  },
+  {
+    "name": "铬酸钠",
+    "key": "sodium_chromate",
+    "category": "材料",
+    "description": "黄色晶体，由铬铁矿与碱性助剂氧化焙烧制得，是提取铬的关键中间体。",
+    "type": [
+      "material"
+    ]
   },
   {
     "name": "氧化铬",
@@ -1759,6 +1795,24 @@
     "key": "strontium_oxide",
     "category": "材料",
     "description": "白色粉末状固体，无味，遇水反应放热，常用于制备其他锶化合物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫化锶",
+    "key": "strontium_sulfide",
+    "category": "材料",
+    "description": "灰白色固体，天青石还原产物。是制备各种锶化合物的前体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化锶",
+    "key": "strontium_chloride",
+    "category": "材料",
+    "description": "无色晶体，易溶于水。用于制备玻璃、医药及焰火（红色火花）。",
     "type": [
       "material"
     ]
@@ -2887,6 +2941,15 @@
     "key": "potassium_nitrate",
     "category": "材料",
     "description": "白色晶体，味咸而凉，易溶于水，是火药的重要成分。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "亚硝酸钾",
+    "key": "potassium_nitrite",
+    "category": "材料",
+    "description": "微黄色晶体，由硝酸钾受热分解制得。在工业上用于有机合成及化学试剂。",
     "type": [
       "material"
     ]
@@ -4265,6 +4328,340 @@
     "type": [
       "material",
       "building"
+    ]
+  },
+  {
+    "name": "硫化钠",
+    "key": "sodium_sulfide",
+    "category": "材料",
+    "description": "又称“红碱”，具有强还原性，在湿法冶金中常用作沉淀剂，或作为硫酸盐还原法的副产物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铬酸钠",
+    "key": "sodium_chromate",
+    "category": "材料",
+    "description": "黄色晶体，是铬铁矿在有氧条件下与碳酸钠焙烧后的产物，易溶于水。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "重铬酸钠",
+    "key": "sodium_dichromate",
+    "category": "材料",
+    "description": "桔红色晶体，通常由铬酸钠溶液经酸化制得，是工业生产三氧化二铬的关键原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化铍",
+    "key": "beryllium_chloride",
+    "category": "材料",
+    "description": "白色针状晶体，极易潮解。在工业上通过氧化铍、焦炭与氯气的高温热解反应制得，用于熔盐电解法制取金属铍。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "含碲碱熔块",
+    "key": "tellurium_flux",
+    "category": "材料",
+    "description": "碲金矿或阳极泥与碳酸钠焙烧后形成的块状物，含有可溶性的碲酸碱金属盐。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "草酸钍",
+    "key": "thorium_oxalate",
+    "category": "材料",
+    "description": "白色沉淀，由钍盐溶液与草酸反应生成，是提取高纯度氧化钍的必经步骤。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化钍",
+    "key": "thorium_oxide",
+    "category": "材料",
+    "description": "白色固体，具有极高的熔点和极强的化学稳定性，是原子能工业中的重要原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸铀酰",
+    "key": "uranyl_nitrate",
+    "category": "材料",
+    "description": "黄色晶体，具有荧光性质。由铀矿物或铀氧化物与硝酸反应制得，是铀燃料循环中的核心中间产物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "重铀酸钠",
+    "key": "sodium_diuranate",
+    "category": "材料",
+    "description": "黄色固体，又称“黄饼”成分之一。由硝酸铀酰溶液加过量氢氧化钠沉淀而得。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸钾",
+    "key": "potassium_sulfate",
+    "category": "材料",
+    "description": "白色结晶性粉末，味苦，易溶于水，是重要的钾肥和工业原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化钾",
+    "key": "potassium_chloride",
+    "category": "材料",
+    "description": "无色立方晶体或白色粉末，味咸，易溶于水，天然存在于钾石盐中。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸铵",
+    "key": "ammonium_sulfate",
+    "category": "材料",
+    "description": "白色结晶，无臭，易溶于水，是一种常用的氮肥。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化铵",
+    "key": "ammonium_chloride",
+    "category": "材料",
+    "description": "白色晶体，受热时分解，冷却时重新凝结，散发出刺鼻的白烟。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸钠",
+    "key": "sodium_nitrate",
+    "category": "材料",
+    "description": "无色透明或白色微带黄色立方晶体，味苦咸，易潮解。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸锌溶液",
+    "key": "zinc_sulfate_solution",
+    "category": "液体",
+    "description": "硫酸锌的水溶液，澄清透明，具有收敛性金属味。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "碳酸锌",
+    "key": "zinc_carbonate",
+    "category": "材料",
+    "description": "白色微细粉末，不溶于水，是菱锌矿的主要成分。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化铜",
+    "key": "copper_oxide",
+    "category": "材料",
+    "description": "黑色粉末，稍有吸湿性。它是铜的稳定氧化物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化锡",
+    "key": "tin_oxide",
+    "category": "材料",
+    "description": "白色或淡黄色粉末，不溶于水，是提取锡的重要原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸铜溶液",
+    "key": "copper_sulfate_solution",
+    "category": "液体",
+    "description": "深蓝色的透明液体，具有强烈的金属酸味，常用于湿法炼铜。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "碳酸铅",
+    "key": "lead_carbonate",
+    "category": "材料",
+    "description": "白色粉末，高折射率，不溶于水，天然存在于白铅矿中。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "碳酸铁",
+    "key": "iron_carbonate",
+    "category": "材料",
+    "description": "菱铁矿的主要成分，通常为灰白色粉末，在空气中易氧化变色。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "碳酸锰",
+    "key": "manganese_carbonate",
+    "category": "材料",
+    "description": "粉红色结晶或米黄色粉末，不溶于水，常用于制造锰盐。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "碳酸水",
+    "key": "carbonated_water",
+    "category": "液体",
+    "description": "溶解了二氧化碳的水，微微冒泡，带有弱酸性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "亚硫酸",
+    "key": "sulfurous_acid",
+    "category": "液体",
+    "description": "二氧化硫的水溶液，具有强烈的刺激性气味和还原性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "发烟硫酸",
+    "key": "fuming_sulfuric_acid",
+    "category": "液体",
+    "description": "溶解了三氧化硫的浓硫酸，在空气中冒出浓烈的酸雾，具有极强的腐蚀性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "碳酸氢铵",
+    "key": "ammonium_bicarbonate",
+    "category": "材料",
+    "description": "白色结晶，具有强烈的氨味，易溶于水，受热易分解。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "次氯酸钠",
+    "key": "sodium_hypochlorite",
+    "category": "液体",
+    "description": "微黄色溶液，具有强烈的氯气味，有氧化性和漂白作用。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "氨水",
+    "key": "ammonia_water",
+    "category": "液体",
+    "description": "氨的水溶液，透明澄清，具有强烈的刺激性氨味。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "铜氨溶液",
+    "key": "cuprammonium_solution",
+    "category": "液体",
+    "description": "深蓝色的透明液体，由铜盐溶于氨水制得，能溶解纤维素。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "氯化银",
+    "key": "silver_chloride",
+    "category": "材料",
+    "description": "白色粉末状固体，见光逐渐分解变黑，几乎不溶于水。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "银氨溶液",
+    "key": "silver_ammonia_solution",
+    "category": "液体",
+    "description": "无色透明液体，具有弱碱性，常用于银镜反应。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "铝酸钠",
+    "key": "sodium_aluminate",
+    "category": "材料",
+    "description": "白色颗粒或粉末，易溶于水，溶液呈强碱性，是拜耳法生产中的中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锌酸钾",
+    "key": "potassium_zincate",
+    "category": "材料",
+    "description": "由氧化锌或锌盐在浓氢氧化钾溶液中反应得到，展示了锌的两性。通常存在于强碱溶液中。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "含钪酸浸液",
+    "key": "scandium_leach_solution",
+    "category": "液体",
+    "description": "赤泥经硫酸浸出后的过滤液，含有低浓度的钪离子及多种金属杂质。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "钪富集沉淀",
+    "key": "scandium_concentrate",
+    "category": "材料",
+    "description": "通过向酸浸液中加入碱（如氨水）获得的粗钪沉淀物，钪含量显著提高。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "草酸钪",
+    "key": "scandium_oxalate",
+    "category": "材料",
+    "description": "白色难溶固体，由钪溶液与草酸反应得到，用于高温分解制取氧化钪。",
+    "type": [
+      "material"
     ]
   }
 ]
