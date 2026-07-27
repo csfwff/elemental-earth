@@ -122,6 +122,21 @@
                 v-model="form.mass"
               />
             </label>
+            <label class="form-control w-full">
+              <span class="label-text mb-1">元素发现小故事 (Markdown)</span>
+              <textarea
+                class="textarea textarea-bordered h-32 w-full font-mono text-sm leading-relaxed"
+                v-model="form.story"
+                placeholder="输入 Markdown 格式的小故事..."
+              ></textarea>
+            </label>
+            <div v-if="form.story" class="mt-4">
+              <span class="label-text mb-2 block text-base-content/50">故事预览</span>
+              <div 
+                class="p-4 bg-base-200 rounded-lg text-sm prose prose-sm max-w-none leading-relaxed"
+                v-html="renderMarkdown(form.story)"
+              ></div>
+            </div>
           </div>
           <div class="modal-action mt-6">
             <button class="btn btn-ghost btn-sm" @click="closeModal">
@@ -141,6 +156,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useAdminStore } from "@/stores/modules/admin";
+import { renderMarkdown } from "@/utils/function";
 
 const admin = useAdminStore();
 const records = ref<any[]>([]);
@@ -153,6 +169,7 @@ const form = ref({
   nameEn: "",
   category: "",
   mass: "",
+  story: "",
 });
 const categories = [
   "alkali-metal",
@@ -180,6 +197,7 @@ function resetForm() {
     nameEn: "",
     category: "",
     mass: "",
+    story: "",
   };
   editing.value = null;
 }
@@ -192,6 +210,7 @@ function openEdit(r: any) {
     nameEn: r.nameEn || "",
     category: r.category || "",
     mass: r.mass || "",
+    story: r.story || "",
   };
   modalRef.value?.showModal();
 }

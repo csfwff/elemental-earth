@@ -12,7 +12,7 @@
             'element-cell',
             el.category === 'placeholder' ? 'placeholder-cell' : 'clickable-cell',
           ]"
-          @click="el.number > 0 && emit('clickElement', el)"
+          @click="el.number > 0 && emit('clickElement', el, $event)"
         >
           <template v-if="el.category !== 'placeholder'">
             <span class="cell-number">{{ el.number }}</span>
@@ -88,7 +88,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   /** Emitted when the user clicks a real element cell. */
-  clickElement: [element: PeriodicElement]
+  clickElement: [element: PeriodicElement, event: MouseEvent]
 }>()
 
 // ─── Derived state ────────────────────────────────────────────────────────────

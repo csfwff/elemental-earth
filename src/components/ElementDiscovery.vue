@@ -78,6 +78,12 @@
             <div v-if="stage === 4" key="done" class="done-container">
               <div class="done-glow" :style="{ color: elementColor }">✦ {{ element?.symbol }} ✦</div>
               <div class="done-text">{{ element?.name }} 已收录至元素周期表</div>
+              
+              <!-- 发现小故事 -->
+              <div v-if="element?.story" class="discovery-story">
+                <div class="story-divider" :style="{ background: `linear-gradient(to right, transparent, ${elementColor}, transparent)` }"></div>
+                <div class="story-content" v-html="renderMarkdown(element.story)"></div>
+              </div>
             </div>
           </Transition>
 
@@ -101,6 +107,7 @@ import { ELEMENTS, getElementById, CATEGORY_LABELS, DEFAULT_CATEGORY_COLORS } fr
 import type { PeriodicElement, ElementCategory } from '@/data/elements'
 import WinAnimation from './WinAnimation.vue'
 import { Items } from '@/data/items.ts'
+import { renderMarkdown } from '@/utils/function'
 
 const props = defineProps<{
   /** 是否可见 */
@@ -633,6 +640,70 @@ function skip() {
 
 .win-stats {
   opacity: 0.6;
+}
+
+.discovery-story {
+  margin-top: 2.5rem;
+  max-width: 460px;
+  animation: fade-in-up 1s ease-out 0.5s both;
+  padding: 0 1rem;
+}
+
+.story-divider {
+  height: 1px;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.story-content {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 16px;
+  line-height: 1.8;
+  font-family: "Noto Serif SC", "Source Han Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+  font-style: italic;
+  text-align: justify;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.story-content :deep(strong) {
+  color: #fff;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.story-divider {
+  height: 1px;
+  width: 100%;
+  margin-bottom: 1rem;
+  opacity: 0.3;
+}
+
+.story-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  font-family: serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes win-glow {

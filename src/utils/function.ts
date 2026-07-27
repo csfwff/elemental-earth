@@ -104,3 +104,13 @@ export const tryFn =
  * @example try$(() => { throw 'throw'; })
  */
 export const try$ = async (fn: Fn, ...args: Parameters<typeof fn>) => await tryFn(fn)(...args);
+import { marked } from 'marked';
+
+/**
+ * 使用 marked 渲染 Markdown
+ */
+export const renderMarkdown = (text: string): string => {
+  if (!text) return '';
+  // marked.parse 返回可能是 string 或 Promise<string>，视配置而定，默认同步
+  return marked.parse(text, { breaks: true, gfm: true }) as string;
+};
