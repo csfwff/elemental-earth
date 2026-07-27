@@ -4149,7 +4149,7 @@
   {
     "key": "four_goat_zun",
     "name": "四羊方尊",
-    "category": "器物",
+    "category": "奇迹",
     "type": [
       "material"
     ],
@@ -4212,7 +4212,7 @@
   {
     "name": "罗马万神殿",
     "key": "pantheon",
-    "category": "建筑",
+    "category": "奇迹",
     "description": "宏伟的穹顶建筑，巨大的圆形拱顶在没有现代机械的情况下精确落成，象征着罗马帝国的辉煌。",
     "type": [
       "material",
@@ -4222,7 +4222,7 @@
   {
     "name": "埃菲尔铁塔",
     "key": "eiffel_tower",
-    "category": "建筑",
+    "category": "奇迹",
     "description": "一座由锻铁构成的宏伟塔楼，高耸入云，象征着工业时代的辉煌。",
     "type": [
       "material",
