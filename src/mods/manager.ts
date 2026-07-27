@@ -67,18 +67,22 @@ async function readZipTextFile(zip: JSZip, path: string): Promise<string> {
 }
 
 function parsePatchEntriesFromContent(model: ModModel, parsed: unknown, sourcePath: string): ModPatchEntry[] {
+  let raw: any[] = [];
   if (Array.isArray(parsed)) {
-    return parsed as ModPatchEntry[];
-  }
-
-  if (isRecord(parsed)) {
+    raw = parsed;
+  } else if (isRecord(parsed)) {
     const modelEntries = parsed[model];
     if (Array.isArray(modelEntries)) {
-      return modelEntries as ModPatchEntry[];
+      raw = modelEntries;
     }
+  } else {
+    throw new Error(`补丁文件格式无效: ${sourcePath}（应为数组，或包含 ${model} 数组字段）`);
   }
 
-  throw new Error(`补丁文件格式无效: ${sourcePath}（应为数组，或包含 ${model} 数组字段）`);
+  return raw.map(entry => ({
+    ...entry,
+    model: entry.model || model,
+  }));
 }
 
 async function parseModPackageFromZipBuffer(buffer: ArrayBuffer): Promise<ModPackage> {
@@ -99,22 +103,22 @@ async function parseModPackageFromZipBuffer(buffer: ArrayBuffer): Promise<ModPac
   const modPkg: ModPackage = { manifest };
 
   if (manifest.contentFiles && isRecord(manifest.contentFiles)) {
-    const patches: ModPatchSet = {};
+    const patches: ModPatchEntry[] = [];
     for (const [model, patchPath] of Object.entries(manifest.contentFiles) as [ModModel, string][]) {
       if (!patchPath) continue;
       const patchText = await readZipTextFile(zip, patchPath);
       const parsed = JSON.parse(patchText) as unknown;
-      patches[model] = parsePatchEntriesFromContent(model, parsed, patchPath);
+      patches.push(...parsePatchEntriesFromContent(model, parsed, patchPath));
     }
-    if (Object.keys(patches).length > 0) {
+    if (patches.length > 0) {
       modPkg.patches = patches;
     }
   } else {
     const fallbackPatchText = await tryReadZipTextFile(zip, 'patches.json');
     if (fallbackPatchText) {
-      const parsed = JSON.parse(fallbackPatchText) as ModPatchSet;
-      if (!isRecord(parsed)) {
-        throw new Error('patches.json 格式无效，必须是对象');
+      const parsed = JSON.parse(fallbackPatchText) as ModPatchEntry[];
+      if (!Array.isArray(parsed)) {
+        throw new Error('patches.json 格式无效，必须是数组');
       }
       modPkg.patches = parsed;
     }

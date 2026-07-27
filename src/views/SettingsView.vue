@@ -507,6 +507,7 @@ function toggleMod(modId: string, enable: boolean) {
     refreshModPanel()
   } catch (e) {
     alert((enable ? '启用' : '停用') + '失败: ' + (e as Error).message)
+    console.error(e)
   }
 }
 

@@ -106,6 +106,15 @@ function mergeDeep(target: DataRecord, source: DataRecord): DataRecord {
       !Array.isArray(targetVal)
     ) {
       output[k] = mergeDeep(targetVal as DataRecord, sourceVal as DataRecord);
+    } else if (Array.isArray(sourceVal) && Array.isArray(targetVal)) {
+      const mergeVals = sourceVal.filter(v => v.__merge_index__ !== undefined);
+      targetVal.forEach((v, idx) => {
+        const sourceMergeVal = mergeVals.find(mv => mv.__merge_index__ === idx);
+        if (sourceMergeVal) {
+          targetVal[idx] = mergeDeep(targetVal[idx] as DataRecord, sourceMergeVal as DataRecord);
+        }
+      });
+      output[k] = [...targetVal, ...cloneValue(sourceVal.filter(v => v.__merge_index__ === undefined))];
     } else {
       output[k] = cloneValue(sourceVal);
     }
@@ -260,10 +269,24 @@ export function applyMods(mods: ModPackage[], explicitOrder: string[] = []): App
     const patchSet = mod.patches;
     if (!patchSet) continue;
 
-    for (const model of Object.keys(patchSet) as ModModel[]) {
-      const entries = patchSet[model] || [];
-      for (const entry of entries) {
+    // Handle both Flat Array and Grouped Object formats
+    if (Array.isArray(patchSet)) {
+      for (const entry of patchSet) {
+        const model = entry.model;
+        if (!model || !modelConfigs[model]) {
+          warnings.push(`[${mod.manifest.modId}] skip unknown model: ${String(model)}`);
+          continue;
+        }
         applyPatchEntry(model, entry, mod, ownerMaps[model], conflicts, warnings);
+      }
+    } else {
+      for (const model of Object.keys(patchSet) as ModModel[]) {
+        const entries = (patchSet as any)[model] || [];
+        if (Array.isArray(entries)) {
+          for (const entry of entries) {
+            applyPatchEntry(model, entry, mod, ownerMaps[model], conflicts, warnings);
+          }
+        }
       }
     }
   }

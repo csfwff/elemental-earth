@@ -9,6 +9,8 @@ import { registerSW } from 'virtual:pwa-register'
 import { gameSDK } from '@/utils/sdk'
 import { modManager } from '@/mods/manager'
 
+modManager.initialize();
+
 export { gameSDK }
 
 const updateServiceWorker = registerSW({

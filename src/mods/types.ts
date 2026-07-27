@@ -13,6 +13,10 @@ export type ConflictPolicy = 'error' | 'warn' | 'last-write-wins';
 export type ModOperation = 'add' | 'override' | 'merge' | 'remove';
 
 export interface ModPatchEntry {
+  /**
+   * 目标模型
+   */
+  model: ModModel;
   op: ModOperation;
   /**
    * 覆盖/合并/删除目标 key
@@ -24,7 +28,7 @@ export interface ModPatchEntry {
   value?: Record<string, unknown>;
 }
 
-export type ModPatchSet = Partial<Record<ModModel, ModPatchEntry[]>>;
+export type ModPatchSet = ModPatchEntry[] | Partial<Record<ModModel, ModPatchEntry[]>>;
 
 export interface ModHookScript {
   id: string;
@@ -39,7 +43,7 @@ export interface NetworkPolicy {
 }
 
 export interface ModManifest {
-  schemaVersion: string;
+  schemaVersion: string | number;
   modId: string;
   name: string;
   version: string;
