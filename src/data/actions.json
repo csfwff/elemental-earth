@@ -1340,6 +1340,9 @@
         "quantity": 1,
         "probability": 1000
       }
+    ],
+    "required_techs": [
+      "stone_masonry"
     ]
   },
   {
