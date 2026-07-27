@@ -645,14 +645,24 @@
     ]
   },
   {
-    "name": "钢结构建筑技术",
     "key": "steel_construction",
+    "name": "钢结构建筑技术",
     "description": "掌握了利用钢梁和铆接技术建造大型结构的能力。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 4
+      },
+      {
+        "key": "rivet",
+        "quantity": 10
+      }
+    ],
     "required_techs": [
       "high_temp_furnace",
       "iron_tool_crafting"
-    ],
-    "time_required": 120
+    ]
   },
   {
     "name": "榫卯构造技艺",
