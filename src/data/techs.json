@@ -653,5 +653,25 @@
       "iron_tool_crafting"
     ],
     "time_required": 120
+  },
+  {
+    "name": "榫卯构造技艺",
+    "key": "tenon_mortise_tech",
+    "description": "掌握了利用榫卯结构进行木构建筑连接的技术，无需金属即可实现稳固的承重与抗扭。",
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 50
+      },
+      {
+        "key": "chisel",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "wood_processing",
+      "iron_tool_crafting"
+    ],
+    "time_required": 120
   }
 ]

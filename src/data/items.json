@@ -4237,5 +4237,34 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "凿子",
+    "key": "chisel",
+    "category": "工具",
+    "description": "用铁锻造成的凿子，刃口锋利，适合在木材上凿孔、雕刻榫卯。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "榫卯构件",
+    "key": "tenon_mortise",
+    "category": "材料",
+    "description": "经过精密加工的木质构件，利用榫头与卯眼的凹凸结合，使木料牢固连接，无需铁钉。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "应县木塔",
+    "key": "yinxian_pagoda",
+    "category": "建筑",
+    "description": "全木结构的楼阁式古塔，塔高67米，历经千年风雨依旧巍然屹立，是中国古代木构建筑的瑰宝。",
+    "type": [
+      "material",
+      "building"
+    ]
   }
 ]

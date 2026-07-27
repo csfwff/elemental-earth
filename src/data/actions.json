@@ -1417,6 +1417,91 @@
     ]
   },
   {
+    "key": "craft_chisel",
+    "name": "打造凿子",
+    "category": "制作",
+    "description": "将铁块锻造成锋利的凿子，用于木材的精细加工。",
+    "time_required": 30,
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 1
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "chisel",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
+    ]
+  },
+  {
+    "key": "craft_tenon_mortise",
+    "name": "制作榫卯构件",
+    "category": "制作",
+    "description": "使用凿子将木材加工成榫头或卯眼形状的构件，用于木构建筑。",
+    "time_required": 15,
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 2
+      },
+      {
+        "key": "chisel",
+        "quantity": 1,
+        "use": 0.02
+      }
+    ],
+    "rewards": [
+      {
+        "key": "tenon_mortise",
+        "quantity": 1,
+        "probability": 1000,
+        "guaranteed": true
+      }
+    ],
+    "required_techs": [
+      "tenon_mortise_tech"
+    ]
+  },
+  {
+    "name": "建造应县木塔",
+    "key": "build_yinxian_pagoda",
+    "category": "奇观",
+    "description": "使用大量木材和榫卯构件，按照传统木构工艺建造应县木塔。",
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 1000
+      },
+      {
+        "key": "tenon_mortise",
+        "quantity": 200
+      },
+      {
+        "key": "cut_stone",
+        "quantity": 50
+      }
+    ],
+    "required_techs": [
+      "tenon_mortise_tech"
+    ],
+    "rewards": [
+      {
+        "key": "yinxian_pagoda",
+        "quantity": 1
+      }
+    ],
+    "time_required": 600
+  },
+  {
     "key": "craft_fiber_cloth",
     "name": "制作纤维布",
     "category": "制作",
