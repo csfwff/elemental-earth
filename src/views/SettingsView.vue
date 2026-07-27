@@ -168,8 +168,8 @@
           <h2 class="card-title text-base">Mod 管理</h2>
           <div class="join">
             <button class="btn btn-sm join-item" @click="showModImport = true">导入文本</button>
-            <button class="btn btn-sm join-item" :disabled="modFileImporting" @click="openModFilePicker">
-              {{ modFileImporting ? '导入中...' : '导入文件(JSON/ZIP)' }}
+            <button class="btn btn-sm join-item tooltip" data-tip="JSON/ZIP" :disabled="modFileImporting" @click="openModFilePicker">
+              {{ modFileImporting ? '导入中...' : '导入文件' }}
             </button>
           </div>
         </div>
@@ -194,7 +194,7 @@
                   <span class="text-xs text-base-content/60">v{{ row.pkg.manifest.version }}</span>
                   <span v-if="isHighTrustMod(row.pkg)" class="badge badge-warning badge-xs ml-1">高权限</span>
                 </div>
-                <div class="text-xs text-base-content/60">{{ row.pkg.manifest.modId }}</div>
+                <div class="text-xs text-base-content/60">{{ row.pkg.manifest.description }}</div>
               </div>
               <div class="join">
                 <button class="btn btn-xs join-item" @click="toggleMod(row.pkg.manifest.modId, !row.enabled)">

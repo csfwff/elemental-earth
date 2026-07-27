@@ -13,6 +13,7 @@ import type {
   ModModel,
   ModPackage,
   ModPatchEntry,
+  ModPatchSet,
 } from './types';
 
 type DataRecord = Record<string, unknown>;
@@ -107,14 +108,25 @@ function mergeDeep(target: DataRecord, source: DataRecord): DataRecord {
     ) {
       output[k] = mergeDeep(targetVal as DataRecord, sourceVal as DataRecord);
     } else if (Array.isArray(sourceVal) && Array.isArray(targetVal)) {
-      const mergeVals = sourceVal.filter(v => v.__merge_index__ !== undefined);
-      targetVal.forEach((v, idx) => {
-        const sourceMergeVal = mergeVals.find(mv => mv.__merge_index__ === idx);
-        if (sourceMergeVal) {
-          targetVal[idx] = mergeDeep(targetVal[idx] as DataRecord, sourceMergeVal as DataRecord);
+      // 深度合并数组：支持通过 __merge_index__ 指定索引合并
+      const newArray = [...targetVal];
+      const sourceArray = sourceVal as any[];
+      
+      // 处理需要合并到指定索引的项目
+      sourceArray.forEach(sourceItem => {
+        if (sourceItem && typeof sourceItem === 'object' && sourceItem.__merge_index__ !== undefined) {
+          const idx = sourceItem.__merge_index__;
+          if (idx >= 0 && idx < newArray.length) {
+            // 排除 __merge_index__ 字段本身进行合并
+            const { __merge_index__, ...cleanSource } = sourceItem;
+            newArray[idx] = mergeDeep(newArray[idx] as DataRecord, cleanSource as DataRecord);
+          }
         }
       });
-      output[k] = [...targetVal, ...cloneValue(sourceVal.filter(v => v.__merge_index__ === undefined))];
+
+      // 处理普通追加的项目（没有 __merge_index__ 的项）
+      const appendVals = sourceArray.filter(v => !v || typeof v !== 'object' || v.__merge_index__ === undefined);
+      output[k] = [...newArray, ...cloneValue(appendVals)];
     } else {
       output[k] = cloneValue(sourceVal);
     }
@@ -124,6 +136,26 @@ function mergeDeep(target: DataRecord, source: DataRecord): DataRecord {
 
 function getKeyFieldValue(record: DataRecord, keyField: string): string {
   return String(record[keyField] ?? '');
+}
+
+function expandPlaceholders(value: any, modId: string): any {
+  if (typeof value === 'string') {
+    if (value.startsWith('$')) {
+      return `${modId}:${value.slice(1)}`;
+    }
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.map(v => expandPlaceholders(v, modId));
+  }
+  if (value !== null && typeof value === 'object') {
+    const out: any = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = expandPlaceholders(v, modId);
+    }
+    return out;
+  }
+  return value;
 }
 
 function handleConflict(
@@ -266,12 +298,16 @@ export function applyMods(mods: ModPackage[], explicitOrder: string[] = []): App
   const sortedMods = sortModsByLoadOrder(mods, explicitOrder);
 
   for (const mod of sortedMods) {
-    const patchSet = mod.patches;
-    if (!patchSet) continue;
+    const rawPatchSet = mod.patches;
+    if (!rawPatchSet) continue;
+
+    // Expand $ placeholders to modId:
+    const patchSet = expandPlaceholders(rawPatchSet, mod.manifest.modId) as ModPatchSet;
 
     // Handle both Flat Array and Grouped Object formats
     if (Array.isArray(patchSet)) {
-      for (const entry of patchSet) {
+      const entries = patchSet as ModPatchEntry[];
+      for (const entry of entries) {
         const model = entry.model;
         if (!model || !modelConfigs[model]) {
           warnings.push(`[${mod.manifest.modId}] skip unknown model: ${String(model)}`);
@@ -280,8 +316,9 @@ export function applyMods(mods: ModPackage[], explicitOrder: string[] = []): App
         applyPatchEntry(model, entry, mod, ownerMaps[model], conflicts, warnings);
       }
     } else {
-      for (const model of Object.keys(patchSet) as ModModel[]) {
-        const entries = (patchSet as any)[model] || [];
+      const patchMap = patchSet as Record<ModModel, ModPatchEntry[]>;
+      for (const model of Object.keys(patchMap) as ModModel[]) {
+        const entries = patchMap[model];
         if (Array.isArray(entries)) {
           for (const entry of entries) {
             applyPatchEntry(model, entry, mod, ownerMaps[model], conflicts, warnings);
