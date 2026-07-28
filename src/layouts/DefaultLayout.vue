@@ -33,6 +33,11 @@
       :eraKey="transitionEra"
       @done="onEraTransitionDone"
     />
+    <WonderDiscovery
+      :visible="appStore.showWonderDiscovery"
+      :actionKey="appStore.wonderActionKey"
+      @done="appStore.showWonderDiscovery = false"
+    />
     <DiscoveryDialog
       :visible="showDiscoveryDialog"
       :itemKey="discoveryItemKey"
@@ -64,6 +69,7 @@ import Right from './components/Right.vue'
 import ElementDiscovery from '@/components/ElementDiscovery.vue'
 import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
+import WonderDiscovery from '@/components/WonderDiscovery.vue'
 import LabSuccessOverlay from '../components/LabSuccessOverlay.vue'
 import TutorialOverlay from '@/components/TutorialOverlay.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'

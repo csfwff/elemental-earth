@@ -76,10 +76,18 @@ export const useAppStore = defineStore('app', () => {
   const labSuccessFormula = ref<string | null>(null)
   const labSuccessProducts = ref<{ key: string; quantity: number }[]>([])
 
+  const showWonderDiscovery = ref(false)
+  const wonderActionKey = ref<string | null>(null)
+
   function triggerLabSuccess(formulaKey: string, products: { key: string; quantity: number }[]) {
     labSuccessFormula.value = formulaKey
     labSuccessProducts.value = products
     showLabSuccess.value = true
+  }
+
+  function triggerWonderDiscovery(actionKey: string) {
+    wonderActionKey.value = actionKey
+    showWonderDiscovery.value = true
   }
 
   function toggleTheme(): void {
@@ -151,8 +159,9 @@ export const useAppStore = defineStore('app', () => {
     taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode, foldTasks, tick,
     onTick,
     showLabSuccess, labSuccessFormula, labSuccessProducts,
+    showWonderDiscovery, wonderActionKey, 
     toggleTheme, toggleLeftSidebar, toggleRightSidebar, toggleFoldTasks,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,
-    triggerLabSuccess
+    triggerLabSuccess, triggerWonderDiscovery
   }
 })

@@ -21,6 +21,13 @@
   const productionStore = useProductionStore();
   const appStore = useAppStore();
 
+  // ─── 奇观限制 ────────────────────────────────────────────────
+  const isWonder = computed(() => props.data.category === '奇观');
+  const hasWonderReward = computed(() => {
+    if (!isWonder.value) return false;
+    return props.data.rewards.some(r => packStore.hasItem(r.key));
+  });
+
   // ─── 冷却时间 ────────────────────────────────────────────────
   const cooldownRemaining = ref(0)
 
@@ -112,10 +119,11 @@
   }
 
   // ─── 批量次数 ────────────────────────────────────────────────
-  const batchCount = computed(() => packStore.batchCounts[props.data.key] || 1);
+  const batchCount = computed(() => isWonder.value ? 1 : (packStore.batchCounts[props.data.key] || 1));
   const showBatchPicker = ref(false);
 
   const maxBatch = computed(() => {
+    if (isWonder.value) return 1;
     const slots = 100 - taskStore.currentMapTasks.length;
     return Math.min(20, Math.max(1, slots));
   });
@@ -150,6 +158,10 @@
   // ─── 可见/可用 ──────────────────────────────────────────────
   const isEnabled = computed(() => {
     if (taskStore.currentMapTasks.length >= 100) return false;
+    
+    // 奇观限制：不可重复执行，若已在执行或背包已有则禁用
+    if (isWonder.value && (isRunning.value || hasWonderReward.value)) return false;
+
     const mapOk = !props.data.map || props.data.map.includes(stateStore.state.map);
     const itemsOk = taskStore.canPerformWithProjection(props.data.required_items);
     const cdOk = !props.data.cooldown || !packStore.isOnCooldown(props.data.key);
@@ -249,6 +261,7 @@
         class="btn btn-soft w-full" 
         :disabled="!isEnabled" 
         @click="performAction"
+        :class="{ 'btn-accent': isWonder && !hasWonderReward }"
       >
         <span class="indicator">
           <span class="px-1">{{ data.name }}</span>
@@ -263,7 +276,7 @@
       <!-- 批量次数（左上） -->
       <div class="absolute -top-2.75 -left-2 z-102">
         <button
-          v-if="packStore.hasTech('fire_starting')"
+          v-if="packStore.hasTech('fire_starting') && !isWonder"
           class="btn btn-xs btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[8px] font-bold"
           :class="batchCount > 1 ? 'text-secondary' : 'text-base-content/40'"
           data-tip="批量执行"
@@ -309,7 +322,7 @@
       </div>
 
       <!-- 添加到生产线 -->
-      <div v-if="packStore.hasTech('production_tech')" class="absolute -bottom-2 -left-2 z-10">
+      <div v-if="packStore.hasTech('production_tech') && !isWonder" class="absolute -bottom-2 -left-2 z-10">
         <button
           class="btn btn-xs btn-circle btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
           title="添加到生产线"
