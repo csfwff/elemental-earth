@@ -98,7 +98,42 @@
         </div>
       </div>
     </div>
-
+    <!-- ─── Wonders Collection ──────────────────────────────────────────────── -->
+    <div class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
+      <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
+        <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
+        世界奇观
+        <span class="text-xs font-normal opacity-50 ml-2">人类文明的丰碑</span>
+      </h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+          v-for="wonder in unlockedWonders" 
+          :key="wonder.key"
+          class="card bg-base-200/50 border border-amber-500/20 hover:border-amber-500/50 transition-all group overflow-hidden"
+        >
+          <div class="card-body p-4 relative">
+            <!-- Background Glow -->
+            <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-500/10 blur-3xl group-hover:bg-amber-500/20 transition-all rounded-full"></div>
+            
+            <div class="flex gap-4">
+              <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center text-3xl shadow-lg ring-1 ring-amber-500/20 transition-transform group-hover:scale-110">
+                {{ getWonderEmoji(wonder.key) }}
+              </div>
+              
+              <div class="flex-1 min-w-0">
+                <h3 class="font-bold text-lg text-amber-500 group-hover:text-amber-400 transition-colors">{{ wonder.name.replace('建造', '').replace('铸造', '') }}</h3>
+                <p class="text-xs opacity-70 line-clamp-2 mt-1 leading-relaxed">{{ wonder.description }}</p>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-end mt-2 pt-2 border-t border-base-content/5">
+              <div class="badge badge-outline badge-amber-500/50 text-[10px] uppercase tracking-tighter opacity-50">已完成</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- ─── Bottle Content Modal ───────────────────────────────────────────── -->
     <dialog ref="bottleModal" class="modal modal-bottom sm:modal-middle bg-base-100/60 backdrop-blur-sm" @click.self="closeBottle">
       <div v-if="activeBottle" class="modal-box p-0 bg-transparent shadow-none overflow-visible max-w-lg w-full">
@@ -149,6 +184,8 @@ import {
 } from '@/data/elements'
 import { useStateStore } from '@/stores/modules/state';
 import { useBottleStore } from '@/stores/modules/bottle';
+import { usePackStore } from '@/stores/modules/pack';
+import ActionsData from '@/data/actions.json'
 import type { IBottle } from '@/data/bottle';
 import { Items } from '@/data/items';
 import { computed } from 'vue';
@@ -167,6 +204,26 @@ function openBottle(bottle: IBottle & { index: number }) {
 
 function closeBottle() {
   bottleModal.value?.close()
+}
+
+// ─── Wonder Logic ─────────────────────────────────────────────────────────────
+const packStore = usePackStore()
+const unlockedWonders = computed(() => {
+  return (ActionsData as any[]).filter(a => 
+    a.category === '奇观' && 
+    a.rewards && 
+    a.rewards.some((r: any) => packStore.hasItem(r.key))
+  )
+})
+
+function getWonderEmoji(key: string) {
+  if (key.includes('zun')) return '🏺'
+  if (key.includes('pantheon') || key.includes('temple')) return '🏛️'
+  if (key.includes('pyramid')) return '📐'
+  if (key.includes('wall')) return '🧱'
+  if (key.includes('tower')) return '🗼'
+  if (key.includes('pagoda')) return '⛩️'
+  return '🏆'
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

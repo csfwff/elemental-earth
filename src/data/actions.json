@@ -1250,7 +1250,7 @@
     "name": "铸造四羊方尊",
     "category": "奇观",
     "description": "将熔融的青铜注入精密的陶模中，铸造传世重器。",
-    "time_required": 600,
+    "time_required": 1200,
     "required_items": [
       {
         "key": "bronze",
@@ -1475,10 +1475,11 @@
     ]
   },
   {
-    "name": "建造应县木塔",
     "key": "build_yinxian_pagoda",
+    "name": "建造应县木塔",
     "category": "奇观",
     "description": "使用大量木材和榫卯构件，按照传统木构工艺建造应县木塔。",
+    "time_required": 2400,
     "required_items": [
       {
         "key": "wood",
@@ -1493,16 +1494,15 @@
         "quantity": 50
       }
     ],
-    "required_techs": [
-      "tenon_mortise_tech"
-    ],
     "rewards": [
       {
         "key": "yinxian_pagoda",
         "quantity": 1
       }
     ],
-    "time_required": 600
+    "required_techs": [
+      "tenon_mortise_tech"
+    ]
   },
   {
     "key": "craft_fiber_cloth",
@@ -3849,7 +3849,7 @@
     "name": "建造罗马万神殿",
     "category": "奇观",
     "description": "按照古罗马的工艺，使用加工石块和罗马混凝土建造一座带有巨大穹顶的神殿。",
-    "time_required": 600,
+    "time_required": 1200,
     "required_items": [
       {
         "key": "cut_stone",
@@ -3909,10 +3909,11 @@
     ]
   },
   {
-    "name": "建造埃菲尔铁塔",
     "key": "build_eiffel_tower",
+    "name": "建造埃菲尔铁塔",
     "category": "奇观",
     "description": "使用大量钢梁和铆钉，按照埃菲尔的设计建造一座举世闻名的铁塔。",
+    "time_required": 2400,
     "required_items": [
       {
         "key": "steel",
@@ -3923,16 +3924,15 @@
         "quantity": 2500
       }
     ],
-    "required_techs": [
-      "steel_construction"
-    ],
     "rewards": [
       {
         "key": "eiffel_tower",
         "quantity": 1
       }
     ],
-    "time_required": 300
+    "required_techs": [
+      "steel_construction"
+    ]
   },
   {
     "key": "make_rivet",
