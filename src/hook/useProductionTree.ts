@@ -76,6 +76,9 @@ export function useProductionTree(pathOverrides: any) {
       const multiple = p.multiple || 1;
       const executions = Math.ceil(count / multiple);
       
+      const requiredByReward = (p as any).required_item;
+      const rewardReqs = requiredByReward ? (Array.isArray(requiredByReward) ? requiredByReward : [requiredByReward]) : [];
+
       const formulaNode: TreeNode = {
         type: 'formula',
         key: f.key,
@@ -109,7 +112,18 @@ export function useProductionTree(pathOverrides: any) {
       }
       if (f.required_items) {
         for (const ri of f.required_items) {
-          const riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
+          let riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
+
+          // If the product requires a specific material, and it's one of the choices in this slot, use it
+          if (rewardReqs.length > 0) {
+            if (Array.isArray(ri.key)) {
+              const match = ri.key.find((k: string) => rewardReqs.includes(k));
+              if (match) riKey = match;
+            } else if (rewardReqs.includes(ri.key)) {
+              riKey = ri.key;
+            }
+          }
+
           const riItem = itemsData.find(i => i.key === riKey);
           const total = executions * (ri.quantity || 1);
           summaryParts.push(`${riItem?.name || riKey} x${total}`);
@@ -147,6 +161,9 @@ export function useProductionTree(pathOverrides: any) {
     const nextVisited = new Set(visited);
     nextVisited.add(`action:${a.key}`);
 
+    const requiredByReward = (rw as any).required_item;
+    const rewardReqs = requiredByReward ? (Array.isArray(requiredByReward) ? requiredByReward : [requiredByReward]) : [];
+
     // Add map info
     if (rw.map) {
       const mapKeys = rw.map.map((m: any) => typeof m === 'string' ? m : m.key);
@@ -164,7 +181,18 @@ export function useProductionTree(pathOverrides: any) {
     }
     if (a.required_items) {
       for (const ri of a.required_items) {
-        const riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
+        let riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
+        
+        // If the reward requires a specific material, and it's one of the choices in this slot, use it
+        if (rewardReqs.length > 0) {
+          if (Array.isArray(ri.key)) {
+            const match = ri.key.find((k: string) => rewardReqs.includes(k));
+            if (match) riKey = match;
+          } else if (rewardReqs.includes(ri.key)) {
+            riKey = ri.key;
+          }
+        }
+
         const riItem = itemsData.find(i => i.key === riKey);
         const total = executions * (ri.quantity || 1);
         summaryParts.push(`${riItem?.name || riKey} x${total}`);

@@ -56,6 +56,15 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // ─── Wiki 百科 ──────────────────────────────────────────────
+  {
+    path: '/wiki',
+    component: () => import('../layouts/WikiLayout.vue'),
+    children: [
+      { path: '',    name: 'WikiHome',   component: () => import('../views/WikiHomeView.vue') },
+      { path: ':key', name: 'WikiDetail', component: () => import('../views/WikiDetailView.vue') },
+    ],
+  },
   // ─── Admin 管理后台 ─────────────────────────────────────────
   {
     path: '/admin',

@@ -114,8 +114,11 @@ function openEraModal() {
           <span v-if="!appStore.isDarkTheme"><Icon icon="tabler:moon" class="text-xl" /></span>
           <span v-else><Icon icon="tabler:sun" class="text-xl" /></span>
         </button>
-        <button class="btn btn-circle" :disabled="stateStore.isSwitching || saving" @click="handleSave" :title="getLastSavedLabel()">
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="handleSave" :title="getLastSavedLabel()">
           <Icon :icon="saving ? 'tabler:check' : 'tabler:device-floppy'" class="text-xl" />
+        </button>
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="$router.push('/wiki')" title="查看百科">
+          <Icon icon="tabler:book" class="text-xl" />
         </button>
         <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleRightSidebar" title="切换右侧栏">
           <Icon :icon="appStore.rightSidebarOpen ? 'icon-park-outline:expand-left' : 'icon-park-outline:expand-right'" class="text-xl" />
