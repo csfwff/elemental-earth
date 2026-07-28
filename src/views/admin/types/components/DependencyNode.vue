@@ -55,6 +55,9 @@
           <span v-if="node.note" class="text-[10px] text-error italic">
             {{ node.note }}
           </span>
+          <span v-if="node.era && node.era !== 'stone'" class="badge badge-sm font-sans badge-accent badge-soft text-[9px] uppercase font-bold tracking-tight" :title="`需 ${getEraName(node.era)}`">
+            {{ getEraName(node.era) }}
+          </span>
         </div>
       </div>
       
@@ -80,6 +83,7 @@
 import { ref, computed, inject, watch, onMounted } from "vue";
 import DependencyNode from "./DependencyNode.vue";
 import type { TreeNode } from "@/hook/useProductionTree";
+import erasData from '@/data/eras.json';
 
 const props = defineProps<{
   node: TreeNode;
@@ -93,6 +97,20 @@ const pathOverrides = inject<any>('pathOverrides');
 function onPathChange(e: Event) {
   const select = e.target as HTMLSelectElement;
   pathOverrides?.update(props.node.key, select.value);
+}
+
+function getEraName(key?: string) {
+  if (!key) return '';
+  const era = (erasData as any[]).find(e => e.key === key);
+  return era?.name || key;
+}
+
+function getEraShortName(key?: string) {
+  if (!key) return '';
+  const eras = erasData as any[];
+  const idx = eras.findIndex(e => e.key === key);
+  const shorts = ['石', '炼', '现', '电', '稀', '原'];
+  return shorts[idx] || key.slice(0, 1).toUpperCase();
 }
 
 const typeIcon = computed(() => {

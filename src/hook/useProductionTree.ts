@@ -1,10 +1,38 @@
 import { ref, computed } from "vue";
-import itemsData from "@/data/items.json";
-import formulasData from "@/data/formula.json";
-import actionsData from "@/data/actions.json";
-import techsData from "@/data/techs.json";
-import mapsData from "@/data/maps.json";
+import { Items as itemsData } from "@/data/items";
+import { Formulas as formulasData } from "@/data/formula";
+import { Actions as actionsData } from "@/data/actions";
+import { Techs as techsData } from "@/data/techs";
+import { Maps as mapsData } from "@/data/maps";
+import { Eras as erasData } from "@/data/eras";
 import { isArray } from "@/utils/is";
+
+// Type-safe eras reference
+const ERAS_LIST = erasData as any[];
+
+// Milestone to Era mapping
+const MILESTONE_ERA_MAP: Record<string, string> = {};
+ERAS_LIST.forEach(era => {
+  if (era.milestones) {
+    era.milestones.forEach((m: any) => {
+      MILESTONE_ERA_MAP[m.key] = era.key;
+    });
+  }
+});
+
+function getMaxEra(era1?: string, era2?: string): string | undefined {
+  if (!era1) return era2;
+  if (!era2) return era1;
+  
+  const idx1 = ERAS_LIST.findIndex(e => e.key === era1);
+  const idx2 = ERAS_LIST.findIndex(e => e.key === era2);
+  
+  // If either is not found, keep the other
+  if (idx1 === -1) return era2;
+  if (idx2 === -1) return era1;
+  
+  return idx1 >= idx2 ? era1 : era2;
+}
 
 export interface TreeNode {
   type: 'item' | 'formula' | 'action' | 'tech';
@@ -18,6 +46,7 @@ export interface TreeNode {
   availableMethods?: { key: string; name: string; type: 'formula' | 'action' }[];
   selectedMethodKey?: string;
   maps?: string[];
+  era?: string;
 }
 
 export function useProductionTree(pathOverrides: any) {
@@ -26,12 +55,20 @@ export function useProductionTree(pathOverrides: any) {
 
   function resolveItem(itemKey: string, count: number, visited: Set<string>): TreeNode {
     const item = itemsData.find(i => i.key === itemKey);
+    
+    // Initial era from required_era or milestone
+    let initialEra = (item as any)?.required_era;
+    if (!initialEra && (item as any)?.milestone) {
+      initialEra = MILESTONE_ERA_MAP[(item as any).milestone];
+    }
+
     const node: TreeNode = {
       type: 'item',
       key: itemKey,
       name: item?.name || itemKey,
       quantity: count,
-      children: []
+      children: [],
+      era: initialEra
     };
 
     const formulas = (formulasData as any[]).filter(f => f.products.some((p: any) => p.key === itemKey));
@@ -85,13 +122,16 @@ export function useProductionTree(pathOverrides: any) {
         name: `配方: ${f.name}`,
         quantity: executions,
         multiplier: multiple,
-        children: []
+        children: [],
+        era: f.required_era
       };
 
       const summaryParts: string[] = [];
       if (f.required_techs) {
         for (const tKey of f.required_techs) {
-          formulaNode.children.push(resolveTech(tKey, nextVisited));
+          const tNode = resolveTech(tKey, nextVisited);
+          formulaNode.children.push(tNode);
+          formulaNode.era = getMaxEra(formulaNode.era, tNode.era);
         }
       }
       if (f.required_actions) {
@@ -101,14 +141,18 @@ export function useProductionTree(pathOverrides: any) {
           const raMin = typeof ra === 'object' ? ra.min || 1 : 1;
           const action = (actionsData as any[]).find(a => a.key === raKey);
           if (action) {
-            formulaNode.children.push(resolveAction(action, itemKey, executions * raMin, nextVisited));
+            const aNode = resolveAction(action, itemKey, executions * raMin, nextVisited);
+            formulaNode.children.push(aNode);
+            formulaNode.era = getMaxEra(formulaNode.era, aNode.era);
           }
         }
       }
       if (f.required_container) {
         const containerItem = itemsData.find(i => i.key === f.required_container);
         summaryParts.push(`${containerItem?.name || f.required_container} x1`);
-        formulaNode.children.push(resolveItem(f.required_container, 1, nextVisited));
+        const cNode = resolveItem(f.required_container, 1, nextVisited);
+        formulaNode.children.push(cNode);
+        formulaNode.era = getMaxEra(formulaNode.era, cNode.era);
       }
       if (f.required_items) {
         for (const ri of f.required_items) {
@@ -127,13 +171,18 @@ export function useProductionTree(pathOverrides: any) {
           const riItem = itemsData.find(i => i.key === riKey);
           const total = executions * (ri.quantity || 1);
           summaryParts.push(`${riItem?.name || riKey} x${total}`);
-          formulaNode.children.push(resolveItem(riKey, total, nextVisited));
+          const riNode = resolveItem(riKey, total, nextVisited);
+          formulaNode.children.push(riNode);
+          formulaNode.era = getMaxEra(formulaNode.era, riNode.era);
         }
       }
       if (summaryParts.length) formulaNode.summary = summaryParts.join(', ');
       node.children.push(formulaNode);
+      node.era = getMaxEra(node.era, formulaNode.era);
     } else if (bestAction) {
-      node.children.push(resolveAction(bestAction, itemKey, count, nextVisited));
+      const aNode = resolveAction(bestAction, itemKey, count, nextVisited);
+      node.children.push(aNode);
+      node.era = getMaxEra(node.era, aNode.era);
     }
 
     return node;
@@ -151,7 +200,8 @@ export function useProductionTree(pathOverrides: any) {
       name: `行动: ${a.name}`,
       quantity: executions,
       multiplier: qty,
-      children: []
+      children: [],
+      era: rw.required_era
     };
 
     if (visited.has(`action:${a.key}`)) {
@@ -176,7 +226,9 @@ export function useProductionTree(pathOverrides: any) {
     const summaryParts: string[] = [];
     if (a.required_techs) {
       for (const tKey of a.required_techs) {
-        actionNode.children.push(resolveTech(tKey, nextVisited));
+        const tNode = resolveTech(tKey, nextVisited);
+        actionNode.children.push(tNode);
+        actionNode.era = getMaxEra(actionNode.era, tNode.era);
       }
     }
     if (a.required_items) {
@@ -196,7 +248,9 @@ export function useProductionTree(pathOverrides: any) {
         const riItem = itemsData.find(i => i.key === riKey);
         const total = executions * (ri.quantity || 1);
         summaryParts.push(`${riItem?.name || riKey} x${total}`);
-        actionNode.children.push(resolveItem(riKey, total, nextVisited));
+        const riNode = resolveItem(riKey, total, nextVisited);
+        actionNode.children.push(riNode);
+        actionNode.era = getMaxEra(actionNode.era, riNode.era);
       }
     }
     if (summaryParts.length) actionNode.summary = summaryParts.join(', ');
@@ -206,16 +260,34 @@ export function useProductionTree(pathOverrides: any) {
   function resolveTech(techKey: string, visited: Set<string>): TreeNode {
     totalTechs.value.add(techKey);
     const tech = (techsData as any[]).find(t => t.key === techKey);
+    
+    // Tech era from required_era or milestone
+    let initialEra = tech?.required_era;
+    if (!initialEra && tech?.milestone) {
+      initialEra = MILESTONE_ERA_MAP[tech.milestone];
+    }
+
     const node: TreeNode = {
       type: 'tech',
       key: techKey,
       name: tech?.name || techKey,
       quantity: 1,
-      children: []
+      children: [],
+      era: initialEra
     };
 
     if (globalProcessedTechs.has(techKey)) {
       node.summary = "(已在别处统计其材料需求)";
+      // Attempt to get era from dependencies even if summarized
+      if (tech?.required_items) {
+        for (const ri of tech.required_items) {
+          const riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
+          const riItem = itemsData.find(i => i.key === riKey);
+          let riEra = (riItem as any)?.required_era;
+          if (!riEra && (riItem as any)?.milestone) riEra = MILESTONE_ERA_MAP[(riItem as any).milestone];
+          node.era = getMaxEra(node.era, riEra);
+        }
+      }
       return node;
     }
     globalProcessedTechs.add(techKey);
@@ -230,12 +302,16 @@ export function useProductionTree(pathOverrides: any) {
     if (tech?.required_items) {
       for (const ri of tech.required_items) {
         const riKey = Array.isArray(ri.key) ? ri.key[0] : ri.key;
-        node.children.push(resolveItem(riKey, ri.quantity || 1, nextVisited));
+        const riNode = resolveItem(riKey, ri.quantity || 1, nextVisited);
+        node.children.push(riNode);
+        node.era = getMaxEra(node.era, riNode.era);
       }
     }
     if (tech?.required_techs) {
       for (const tKey of tech.required_techs) {
-        node.children.push(resolveTech(tKey, nextVisited));
+        const tNode = resolveTech(tKey, nextVisited);
+        node.children.push(tNode);
+        node.era = getMaxEra(node.era, tNode.era);
       }
     }
     return node;

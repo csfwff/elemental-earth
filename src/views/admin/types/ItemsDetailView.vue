@@ -3,6 +3,7 @@ import { ref, computed, onMounted, provide, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import itemsData from "@/data/items.json";
 import elementsData from "@/data/elements.json";
+import erasData from "@/data/eras.json";
 import DependencyNode from "./components/DependencyNode.vue";
 import RequirementSummary from "./components/RequirementSummary.vue";
 import { useProductionTree } from "@/hook/useProductionTree";
@@ -33,6 +34,11 @@ provide('pathOverrides', {
     pathOverrides.value[key] = methodKey;
     buildTree();
   }
+});
+
+const recommendedEra = computed(() => {
+  if (!rootNode.value?.era) return null;
+  return (erasData as any[]).find(e => e.key === rootNode.value.era);
 });
 
 function buildTree() {
@@ -98,6 +104,10 @@ watch(() => route.params.id, (newId) => {
               <div class="flex justify-between items-center border-b border-base-200 pb-2">
                 <span class="opacity-60">类型</span>
                 <span>{{ item.type?.join(', ') || 'N/A' }}</span>
+              </div>
+              <div v-if="recommendedEra" class="flex justify-between items-center border-b border-base-200 pb-2">
+                <span class="opacity-60">推荐时代</span>
+                <span class="badge badge-accent">{{ recommendedEra.name }}</span>
               </div>
               <div class="flex justify-between items-center border-b border-base-200 pb-2" v-if="item.milestone">
                 <span class="opacity-60">里程碑</span>

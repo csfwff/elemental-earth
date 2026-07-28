@@ -93,9 +93,9 @@
                   <span class="opacity-50">分类</span>
                   <span class="font-medium text-info">{{ item.category }}</span>
                 </div>
-                <div class="flex items-center justify-between text-sm">
+                <div v-if="recommendedEra && recommendedEra.key !== item.required_era" class="flex items-center justify-between text-sm">
                   <span class="opacity-50">时代</span>
-                  <span class="badge badge-ghost font-bold">{{ getEraName(item.required_era) }}</span>
+                  <span class="badge badge-accent font-bold">{{ recommendedEra.name }}</span>
                 </div>
               </div>
             </div>
@@ -176,6 +176,27 @@ provide('pathOverrides', {
   update: (key: string, methodKey: string) => {
     pathOverrides.value[key] = methodKey;
     buildTree();
+  }
+});
+
+const recommendedEra = computed(() => {
+  if (!rootNode.value?.era) return null;
+  return (erasData as any[]).find(e => e.key === rootNode.value.era);
+});
+
+onMounted(() => {
+  buildTree();
+});
+
+watch(() => route.params.key, (newVal) => {
+  if (newVal) {
+    itemKey.value = newVal as string;
+    pathOverrides.value = {};
+    buildTree();
+    // Record search
+    const history = JSON.parse(localStorage.getItem('wiki_recent_searches') || '[]');
+    const newHistory = [newVal, ...history.filter((k: string) => k !== newVal)].slice(0, 5);
+    localStorage.setItem('wiki_recent_searches', JSON.stringify(newHistory));
   }
 });
 
