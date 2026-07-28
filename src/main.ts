@@ -67,6 +67,7 @@ async function preloadStoresForMods() {
     appModule,
     adminModule,
     fragmentModule,
+    bottleModule,
     labModule,
     logModule,
     packModule,
@@ -79,6 +80,7 @@ async function preloadStoresForMods() {
     import('@/stores/modules/app'),
     import('@/stores/modules/admin'),
     import('@/stores/modules/fragment'),
+    import('@/stores/modules/bottle'),
     import('@/stores/modules/lab'),
     import('@/stores/modules/log'),
     import('@/stores/modules/pack'),
@@ -92,6 +94,7 @@ async function preloadStoresForMods() {
   appModule.useAppStore();
   adminModule.useAdminStore();
   fragmentModule.useFragmentStore();
+  bottleModule.useBottleStore();
   labModule.useLabStore();
   logModule.useLogStore();
   packModule.usePackStore();

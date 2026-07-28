@@ -3,9 +3,11 @@
     import { computed } from 'vue';
     import { useFragmentStore } from '@/stores/modules/fragment';
     import { usePackStore } from '@/stores/modules/pack';
+    import { useBottleStore } from '@/stores/modules/bottle';
 
     const packStore = usePackStore();
     const fragmentStore = useFragmentStore();
+    const bottleStore = useBottleStore();
     const tabs = computed(() => routes[0].children?.filter(r => {
         if (r.name === 'Production' && !packStore.hasTech('production_tech')) return false;
         return true;
@@ -27,6 +29,7 @@
             <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
             <span class="indicator hidden sm:inline">
                 <span v-if="tab.name === 'Manuscripts' && fragmentStore.hasUnread" class="indicator-item status status-error"></span>
+                <span v-if="tab.name === 'Explore' && bottleStore.hasUnread" class="indicator-item status status-error"></span>
                 <span class="hidden sm:inline">{{ tab.label }}</span>
             </span>
         </RouterLink>

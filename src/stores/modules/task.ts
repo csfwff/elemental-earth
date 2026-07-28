@@ -6,6 +6,7 @@ import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
 import { useAppStore } from '@/stores/modules/app';
 import { useFragmentStore } from '@/stores/modules/fragment';
+import { useBottleStore } from '@/stores/modules/bottle';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { tips } from '@/data/tips';
@@ -515,6 +516,17 @@ export const useTaskStore = defineStore('task', () => {
                 logStore.addLog(`在${task.name}过程中意外发现了一份「手稿」：${picked.name} 的残片`, 'reward');
                 notifyTaskComplete('获得手稿', `${picked.name} 的残片`);
               }
+            }
+          }
+        }
+
+        // 漂流瓶掉落逻辑
+        if (task.key === 'fetch_seawater') {
+          if (Math.random() < 0.01) {
+            const bottleStore = useBottleStore();
+            if (bottleStore.unlockRandomBottle()) {
+              logStore.addLog('你捡到一个漂流瓶', 'reward');
+              notifyTaskComplete('获得漂流瓶', '你捡到一个漂流瓶');
             }
           }
         }

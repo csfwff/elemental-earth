@@ -72,6 +72,68 @@
         </div>
       </Transition>
     </div>
+
+    <!-- ─── Drifting Bottles ────────────────────────────────────────────────── -->
+    <div class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
+      <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
+        <Icon icon="game-icons:square-bottle" class="text-2xl text-primary" />
+        漂流瓶
+        <span class="text-xs font-normal opacity-50 ml-2">海边的意外惊喜</span>
+      </h2>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div 
+          v-for="bottle in bottleStore.collectedBottles" 
+          :key="bottle.index"
+          class="relative group cursor-pointer"
+          @click="openBottle(bottle)"
+        >
+          <div class="aspect-square rounded-xl bg-base-200 border border-base-300 flex flex-col items-center justify-center gap-2 transition-all hover:scale-105 hover:bg-base-300 hover:border-primary/30">
+            <Icon icon="game-icons:square-bottle" size="3em" class="text-primary/80 group-hover:text-primary transition-colors" />
+            <span class="text-xs opacity-60">#{{ bottle.index + 1 }}</span>
+            
+            <!-- Unread Badge -->
+            <div v-if="bottleStore.isUnread(bottle.index)" class="badge badge-error badge-xs absolute -top-1 -right-1">NEW</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Bottle Content Modal ───────────────────────────────────────────── -->
+    <dialog ref="bottleModal" class="modal modal-bottom sm:modal-middle bg-base-100/60 backdrop-blur-sm" @click.self="closeBottle">
+      <div v-if="activeBottle" class="modal-box p-0 bg-transparent shadow-none overflow-visible max-w-lg w-full">
+        <div class="paper-animation relative py-12 px-8 overflow-hidden">
+          <!-- The Paper Background (Aged Texture) -->
+          <div class="absolute inset-0 bg-base-300/90 shadow-2xl parchment-effect paper-shape"></div>
+          
+          <!-- Decorative Paper Folds/Creases -->
+          <div class="absolute inset-0 pointer-events-none opacity-30">
+            <div class="absolute top-1/3 left-0 right-0 h-6 -translate-y-1/2 bg-gradient-to-b from-transparent via-base-content/5 to-transparent blur-[1px]"></div>
+            <div class="absolute top-2/3 left-0 right-0 h-6 -translate-y-1/2 bg-gradient-to-b from-transparent via-base-content/5 to-transparent blur-[1px]"></div>
+          </div>
+
+          <!-- Content Container -->
+          <div class="relative z-10 text-base-content px-4">
+            <div class="flex items-start gap-4 mb-6">
+              <Icon icon="fa6-solid:quote-left" class="text-3xl text-primary mt-1 opacity-50 shrink-0" />
+              <p class="text-xl md:text-2xl font-serif font-bold leading-relaxed italic tracking-wide">{{ activeBottle.content }}</p>
+            </div>
+            
+            <div class="text-right text-lg font-serif mb-8 opacity-80 pr-6">
+              —— {{ activeBottle.author }}
+            </div>
+            
+            <div class="border-t border-base-content/5 pt-6 px-2">
+              <p class="text-sm opacity-60 leading-relaxed indent-8 font-serif italic">{{ activeBottle.description }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <form method="dialog" class="absolute -top-12 right-4 sm:-right-4">
+          <button class="btn btn-sm btn-circle btn-ghost text-white hover:bg-white/20" @click="closeBottle">✕</button>
+        </form>
+      </div>
+    </dialog>
   </div>
 </template>
 
@@ -86,16 +148,33 @@ import {
   type ElementCategory,
 } from '@/data/elements'
 import { useStateStore } from '@/stores/modules/state';
+import { useBottleStore } from '@/stores/modules/bottle';
+import type { IBottle } from '@/data/bottle';
 import { Items } from '@/data/items';
 import { computed } from 'vue';
 import { renderMarkdown } from '@/utils/function';
 import { vOnClickOutside as vClickOutside } from '@vueuse/components'
+
+// ─── Bottle Logic ─────────────────────────────────────────────────────────────
+const activeBottle = ref<(IBottle & { index: number }) | null>(null)
+const bottleModal = ref<HTMLDialogElement | null>(null)
+
+function openBottle(bottle: IBottle & { index: number }) {
+  activeBottle.value = bottle
+  bottleStore.markAsRead(bottle.index)
+  bottleModal.value?.showModal()
+}
+
+function closeBottle() {
+  bottleModal.value?.close()
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Configuration variable — modify this array to control which elements are lit.
 //  Values are atomic numbers (1–118).
 // ─────────────────────────────────────────────────────────────────────────────
 const stateStore = useStateStore();
+const bottleStore = useBottleStore();
 const litElements = ref<number[]>(stateStore.state.elements || []);
 
 // Find atomic numbers of elements that are implemented as items
@@ -251,5 +330,39 @@ const popoverStyle = computed(() => {
 .popover-mobile.popover-enter-from,
 .popover-mobile.popover-leave-to {
   transform: translate(-50%, -40%) scale(0.95);
+}
+
+.paper-animation {
+  animation: paper-float-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes paper-float-in {
+  0% {
+    transform: translateY(30px) rotate(-3deg) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) rotate(0.5deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.paper-shape {
+  clip-path: polygon(
+    2% 1%, 98% 2%, 99% 98%, 1% 99%, 
+    1% 50%, 0.5% 48%, 1% 45%, 
+    1% 10%
+  );
+  border-radius: 2px;
+}
+
+.parchment-effect {
+  background-image: 
+    radial-gradient(circle at 50% 50%, transparent 80%, rgba(0,0,0,0.02) 100%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.005) 0px, rgba(0,0,0,0.005) 1px, transparent 1px, transparent 10px);
+}
+
+.font-serif {
+  font-family: "Noto Serif SC", "Source Han Serif CN", "Songti SC", serif;
 }
 </style>

@@ -4,6 +4,7 @@ import { useStateStore } from '@/stores/modules/state';
 import { useTaskStore } from '@/stores/modules/task';
 import { useLogStore } from '@/stores/modules/log';
 import { useFragmentStore } from '@/stores/modules/fragment';
+import { useBottleStore } from '@/stores/modules/bottle';
 import { useProductionStore } from '@/stores/modules/production';
 import type { IPackItem, IManuscriptGroup } from '@/stores/modules/pack';
 import type { IGameState } from '@/stores/modules/state';
@@ -47,6 +48,10 @@ export interface SaveData {
   fragments: string[];
   /** 未读手稿列表 */
   unreadFragments: string[];
+  /** 已收集的漂流瓶索引 */
+  bottles?: number[];
+  /** 未读漂流瓶索引 */
+  unreadBottles?: number[];
   /** 生产线草稿（v6 新增） */
   productionDraft?: IProductionLineStep[];
   /** 生产线列表（v5 新增） */
@@ -70,6 +75,7 @@ export function saveGame(): boolean {
     const taskStore = useTaskStore();
     const logStore = useLogStore();
     const fragmentStore = useFragmentStore();
+    const bottleStore = useBottleStore();
     const productionStore = useProductionStore();
 
     const data: SaveData = {
@@ -90,6 +96,8 @@ export function saveGame(): boolean {
       performedActions: Array.from(packStore.performedActions),
       fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
+      bottles: JSON.parse(JSON.stringify(bottleStore.collectedIndices)),
+      unreadBottles: JSON.parse(JSON.stringify(bottleStore.unreadIndices)),
       productionDraft: JSON.parse(JSON.stringify(productionStore.draftSteps)),
       productionLines: JSON.parse(JSON.stringify(productionStore.productionLines)),
       manuscripts: JSON.parse(JSON.stringify(packStore.manuscripts)),
@@ -136,6 +144,7 @@ export function loadGame(): boolean {
     const taskStore = useTaskStore();
     const logStore = useLogStore();
     const fragmentStore = useFragmentStore();
+    const bottleStore = useBottleStore();
     const productionStore = useProductionStore();
 
     // 恢复地图状态
@@ -159,6 +168,10 @@ export function loadGame(): boolean {
     // 恢复手稿（碎片）
     fragmentStore.fragments = data.fragments || [];
     fragmentStore.unreadFragments = data.unreadFragments || [];
+
+    // 恢复漂流瓶
+    bottleStore.collectedIndices = data.bottles || [];
+    bottleStore.unreadIndices = data.unreadBottles || [];
 
     // 恢复背包物品
     packStore.items.splice(0, packStore.items.length, ...data.items);
