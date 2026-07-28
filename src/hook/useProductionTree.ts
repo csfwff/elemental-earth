@@ -3,6 +3,7 @@ import itemsData from "@/data/items.json";
 import formulasData from "@/data/formula.json";
 import actionsData from "@/data/actions.json";
 import techsData from "@/data/techs.json";
+import mapsData from "@/data/maps.json";
 import { isArray } from "@/utils/is";
 
 export interface TreeNode {
@@ -16,6 +17,7 @@ export interface TreeNode {
   summary?: string;
   availableMethods?: { key: string; name: string; type: 'formula' | 'action' }[];
   selectedMethodKey?: string;
+  maps?: string[];
 }
 
 export function useProductionTree(pathOverrides: any) {
@@ -144,6 +146,15 @@ export function useProductionTree(pathOverrides: any) {
     }
     const nextVisited = new Set(visited);
     nextVisited.add(`action:${a.key}`);
+
+    // Add map info
+    if (rw.map) {
+      const mapKeys = rw.map.map((m: any) => typeof m === 'string' ? m : m.key);
+      actionNode.maps = mapKeys.map((k: string) => {
+        const m = (mapsData as any[]).find(md => md.key === k);
+        return m?.name || k;
+      });
+    }
 
     const summaryParts: string[] = [];
     if (a.required_techs) {

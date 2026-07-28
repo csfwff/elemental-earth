@@ -48,6 +48,10 @@
           <span v-if="node.multiplier" class="text-[10px] opacity-40">
             (单次产出: {{ node.multiplier }})
           </span>
+          <span v-if="node.maps && node.maps.length" class="badge badge-sm badge-outline badge-ghost border-base-content/10 font-sans text-[10px] gap-1">
+            <Icon icon="tabler:map-pin" size="10" />
+            {{ node.maps.join('/') }}
+          </span>
           <span v-if="node.note" class="text-[10px] text-error italic">
             {{ node.note }}
           </span>
