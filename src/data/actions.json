@@ -1291,8 +1291,7 @@
           2,
           5
         ],
-        "probability": 1000,
-        "guaranteed": true
+        "probability": 1000
       }
     ],
     "required_techs": [
@@ -3873,10 +3872,6 @@
     "required_techs": [
       "stone_masonry",
       "roman_architecture"
-    ],
-    "map": [
-      "basin",
-      "mountain"
     ]
   },
   {
@@ -3960,6 +3955,191 @@
     ],
     "required_techs": [
       "iron_tool_crafting"
+    ]
+  },
+  {
+    "key": "gas_liquefaction_process",
+    "name": "气体液化",
+    "category": "制作",
+    "description": "使用深冷设备将氢气、氧气和氦气液化储存。",
+    "time_required": 60,
+    "required_items": [
+      {
+        "key": [
+          "hydrogen",
+          "oxygen",
+          "helium"
+        ],
+        "quantity": 10
+      },
+      {
+        "key": "steel_cylinder",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "liquid_hydrogen",
+        "quantity": 5,
+        "probability": 1000
+      },
+      {
+        "key": "liquid_oxygen",
+        "quantity": 5,
+        "probability": 1000
+      },
+      {
+        "key": "liquid_helium",
+        "quantity": 5,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "gas_liquefaction"
+    ]
+  },
+  {
+    "key": "magnesium_aluminum_alloy_production",
+    "name": "制造镁铝合金",
+    "category": "制作",
+    "description": "在高温熔炉中将镁和铝按照特定比例熔合，并加入适量微量元素，制造航天级轻质合金。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "magnesium",
+        "quantity": 5
+      },
+      {
+        "key": "aluminum",
+        "quantity": 10
+      }
+    ],
+    "rewards": [
+      {
+        "key": "magnesium_aluminum_alloy",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "magnesium_aluminum_alloying"
+    ]
+  },
+  {
+    "key": "solar_cell_production",
+    "name": "制造太阳能电池",
+    "category": "制作",
+    "description": "利用高纯度硅片和玻璃，通过精密的半导体工艺制造高效能光伏电池。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "silicon",
+        "quantity": 2
+      },
+      {
+        "key": "glass",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "solar_cell",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "solar_cell_manufacturing"
+    ]
+  },
+  {
+    "key": "launch_vehicle_manufacturing",
+    "name": "运载火箭制造",
+    "category": "制作",
+    "description": "组装高强度的镁铝合金箭体、推进系统和精密电子控制设备。",
+    "time_required": 600,
+    "required_items": [
+      {
+        "key": "magnesium_aluminum_alloy",
+        "quantity": 100
+      },
+      {
+        "key": "liquid_hydrogen",
+        "quantity": 50
+      },
+      {
+        "key": "liquid_oxygen",
+        "quantity": 50
+      }
+    ],
+    "rewards": [
+      {
+        "key": "launch_vehicle",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "jet_propulsion_tech"
+    ]
+  },
+  {
+    "key": "space_station_manufacturing",
+    "name": "制造空间站",
+    "category": "制作",
+    "description": "制造空间站的核心舱段、生活舱以及用于能量供应的巨大太阳能帆板。",
+    "time_required": 1200,
+    "required_items": [
+      {
+        "key": "magnesium_aluminum_alloy",
+        "quantity": 200
+      },
+      {
+        "key": "solar_cell",
+        "quantity": 50
+      },
+      {
+        "key": "steel",
+        "quantity": 100
+      }
+    ],
+    "rewards": [
+      {
+        "key": "space_station",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "solar_cell_manufacturing"
+    ]
+  },
+  {
+    "key": "launch_space_station",
+    "name": "发射空间站",
+    "category": "奇观",
+    "description": "利用运载火箭将巨大的空间站送入地球近地轨道，开启人类迈向深空的纪元。",
+    "time_required": 3600,
+    "required_items": [
+      {
+        "key": "launch_vehicle",
+        "quantity": 1
+      },
+      {
+        "key": "space_station",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "launched_space_station",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "jet_propulsion_tech"
     ]
   }
 ]

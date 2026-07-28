@@ -100,10 +100,13 @@ const wonderEmoji = computed(() => {
   if (k.includes('wall')) return '🧱'
   if (k.includes('tower')) return '🗼'
   if (k.includes('pagoda')) return '⛩️'
+  if (k.includes('space_station')) return '🛰'
   return '🏆'
 })
 
 // 动画流程控制
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 watch(() => props.visible, async (val) => {
   if (!val) {
     stage.value = 0
@@ -139,9 +142,6 @@ function onOverlayClick() {
   }
 }
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 </script>
 
 <style scoped>

@@ -223,6 +223,7 @@ function getWonderEmoji(key: string) {
   if (key.includes('wall')) return '🧱'
   if (key.includes('tower')) return '🗼'
   if (key.includes('pagoda')) return '⛩️'
+  if (key.includes('space_station')) return '🛰'  
   return '🏆'
 }
 

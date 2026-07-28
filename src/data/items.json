@@ -4663,5 +4663,86 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "key": "magnesium_aluminum_alloy",
+    "name": "镁铝合金",
+    "category": "材料",
+    "description": "一种由镁和铝组成的轻质合金，具有高强度和优良的耐腐蚀性，是航空航天工业的重要材料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "liquid_hydrogen",
+    "name": "液氢",
+    "category": "液体",
+    "description": "处于液态的氢气，具有极高的能量密度，常用作火箭的低温燃料。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 1
+  },
+  {
+    "key": "liquid_oxygen",
+    "name": "液氧",
+    "category": "液体",
+    "description": "处于液态的氧气，呈淡蓝色，是强大的助燃剂，广泛用于火箭推进系统。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 8
+  },
+  {
+    "key": "liquid_helium",
+    "name": "液氦",
+    "category": "液体",
+    "description": "极低温的液体氦，沸点接近绝对零度，用于超导技术和深低温物理实验。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 2
+  },
+  {
+    "key": "solar_cell",
+    "name": "太阳能电池",
+    "category": "材料",
+    "description": "利用半导体的光生伏特效应将光能直接转变为电能的器件。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "launch_vehicle",
+    "name": "运载火箭",
+    "category": "工具",
+    "description": "用于携带有效载荷离开地球大气层并进入预定轨道的飞行器。",
+    "type": [
+      "material",
+      "tool"
+    ]
+  },
+  {
+    "key": "space_station",
+    "name": "空间站",
+    "category": "工具",
+    "description": "在轨道上运行，供宇航员长期工作和生活的实验室。",
+    "type": [
+      "material",
+      "building"
+    ],
+    "milestone": "launch_space_station"
+  },
+  {
+    "key": "launched_space_station",
+    "name": "和平号空间站",
+    "category": "奇观",
+    "description": "已成功发射并进入轨道的空间站，人类文明的象征。",
+    "type": [
+      "material"
+    ]
   }
 ]

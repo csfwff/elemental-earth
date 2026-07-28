@@ -683,5 +683,82 @@
       "iron_tool_crafting"
     ],
     "time_required": 120
+  },
+  {
+    "key": "magnesium_aluminum_alloying",
+    "name": "镁铝合金锻造",
+    "description": "通过精确控制镁与铝的比例并添加微量元素，冶炼出轻质、高强度的合金。",
+    "time_required": 180,
+    "required_items": [
+      {
+        "key": "magnesium",
+        "quantity": 10
+      },
+      {
+        "key": "aluminum",
+        "quantity": 20
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ]
+  },
+  {
+    "key": "gas_liquefaction",
+    "name": "压缩液化气体",
+    "description": "利用高压和深冷技术，将常温下的气体转化为高能量密度的低温液体。",
+    "time_required": 240,
+    "required_items": [
+      {
+        "key": "liquid_nitrogen",
+        "quantity": 5
+      },
+      {
+        "key": "steel",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ]
+  },
+  {
+    "key": "jet_propulsion_tech",
+    "name": "喷气推进技术",
+    "description": "基于动量守恒原理，深入研究燃气膨胀与喷嘴设计，实现强大的推力输出。",
+    "time_required": 300,
+    "required_items": [
+      {
+        "key": "magnesium_aluminum_alloy",
+        "quantity": 20
+      },
+      {
+        "key": "steel",
+        "quantity": 50
+      }
+    ],
+    "required_techs": [
+      "precision_machinery",
+      "gas_liquefaction"
+    ]
+  },
+  {
+    "key": "solar_cell_manufacturing",
+    "name": "太阳能电池制造",
+    "description": "利用光伏效应，制备高纯度硅片并构建P-N结，将光能转化为电能。",
+    "time_required": 240,
+    "required_items": [
+      {
+        "key": "silicon",
+        "quantity": 20
+      },
+      {
+        "key": "glass",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ]
   }
 ]
