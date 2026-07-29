@@ -10009,9 +10009,16 @@
     "key": "copper_displacement_iron",
     "name": "铁置换铜",
     "description": "铁与硫酸铜溶液反应生成铜和硫酸亚铁。",
+    "fragment_description": "将#iron#放入#copper_sulfate_solution#中进行$stirring$，利用置换反应沉淀出金属#copper#并产出#iron_sulfate#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
-        "key": "iron",
+        "key": "pig_iron",
         "quantity": 1,
         "isMain": true
       },
@@ -10020,10 +10027,6 @@
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "stirring"
-    },
-    "time_required": 20,
     "products": [
       {
         "key": "copper",
@@ -10033,9 +10036,7 @@
         "key": "iron_sulfate",
         "multiple": 1
       }
-    ],
-    "required_era": "modern_chem",
-    "fragment_description": "将#iron#放入#copper_sulfate_solution#中进行$stirring$，利用置换反应沉淀出金属#copper#并产出#iron_sulfate#。"
+    ]
   },
   {
     "key": "copper_displacement_zinc",
@@ -10228,6 +10229,14 @@
     "key": "ammonium_chloride_decomposition",
     "name": "氯化铵受热分解",
     "description": "氯化铵受热分解为氨气和盐酸气。",
+    "fragment_description": "由于#ammonium_chloride#具有不稳定性，受热即发生$roasting$分解，产生#ammonia#与#hydrochloric_acid#蒸汽。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "ammonium_chloride",
@@ -10235,11 +10244,6 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "roasting"
-    },
-    "required_container": "clay_pot",
-    "time_required": 20,
     "products": [
       {
         "key": "ammonia",
@@ -10251,9 +10255,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ],
-    "required_era": "modern_chem",
-    "fragment_description": "由于#ammonium_chloride#具有不稳定性，受热即发生$roasting$分解，产生#ammonia#与#hydrochloric_acid#蒸汽。"
+    ]
   },
   {
     "key": "carbon_dioxide_dissolution",

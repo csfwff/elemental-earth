@@ -1,20 +1,23 @@
 [
   {
-    "name": "干馏",
     "key": "dry_distillation",
+    "name": "干馏",
     "description": "将物体在缺氧条件下加热，产生可燃气体和炭化物。",
     "time_required": 30,
+    "requires_burning": true,
     "required_item": [
       {
-        "key": "clay_pot",
+        "key": [
+          "clay_pot",
+          "crucible"
+        ],
         "quantity": 1,
         "use": 0.1
       }
     ],
     "required_techs": [
       "pottery"
-    ],
-    "requires_burning": true
+    ]
   },
   {
     "key": "roasting",
