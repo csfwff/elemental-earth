@@ -117,8 +117,8 @@
             <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-500/10 blur-3xl group-hover:bg-amber-500/20 transition-all rounded-full"></div>
             
             <div class="flex gap-4">
-              <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center text-3xl shadow-lg ring-1 ring-amber-500/20 transition-transform group-hover:scale-110">
-                {{ getWonderEmoji(wonder.key) }}
+              <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center shadow-lg ring-1 ring-amber-500/20 transition-transform group-hover:scale-110 overflow-hidden">
+                <img :src="getWonderImage(wonder)" class="w-full h-full object-cover p-1" />
               </div>
               
               <div class="flex-1 min-w-0">
@@ -216,15 +216,10 @@ const unlockedWonders = computed(() => {
   )
 })
 
-function getWonderEmoji(key: string) {
-  if (key.includes('zun')) return '🏺'
-  if (key.includes('pantheon') || key.includes('temple')) return '🏛️'
-  if (key.includes('pyramid')) return '𓂀'
-  if (key.includes('wall')) return '🧱'
-  if (key.includes('tower')) return '🗼'
-  if (key.includes('pagoda')) return '⛩️'
-  if (key.includes('space_station')) return '🛰'  
-  return '🏆'
+function getWonderImage(wonder: any) {
+  const rewardKey = wonder.rewards?.[0]?.key
+  if (!rewardKey) return ''
+  return new URL(`../assets/images/${rewardKey}.png`, import.meta.url).href
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

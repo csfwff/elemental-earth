@@ -20,7 +20,7 @@
   {
     "name": "埃及金字塔",
     "key": "giza_pyramid",
-    "category": "建筑",
+    "category": "奇观",
     "description": "巍峨的巨型石砌建筑，矗立在沙海之间，诉说着千年的秘密。它是人类劳动力与几何智慧的巅峰结晶。",
     "type": [
       "material",
@@ -4212,7 +4212,7 @@
   {
     "key": "four_goat_zun",
     "name": "四羊方尊",
-    "category": "奇迹",
+    "category": "奇观",
     "type": [
       "material"
     ],
@@ -4255,7 +4255,7 @@
   {
     "key": "ming_great_wall",
     "name": "万里长城",
-    "category": "奇迹",
+    "category": "奇观",
     "description": "明代修筑的砖石结构长城，不仅是边防防线，更是中华工程技术的丰碑。",
     "type": [
       "material"
@@ -4275,7 +4275,7 @@
   {
     "name": "罗马万神殿",
     "key": "pantheon",
-    "category": "奇迹",
+    "category": "奇观",
     "description": "宏伟的穹顶建筑，巨大的圆形拱顶在没有现代机械的情况下精确落成，象征着罗马帝国的辉煌。",
     "type": [
       "material",
@@ -4285,7 +4285,7 @@
   {
     "name": "埃菲尔铁塔",
     "key": "eiffel_tower",
-    "category": "奇迹",
+    "category": "奇观",
     "description": "一座由锻铁构成的宏伟塔楼，高耸入云，象征着工业时代的辉煌。",
     "type": [
       "material",
@@ -4323,7 +4323,7 @@
   {
     "name": "应县木塔",
     "key": "yinxian_pagoda",
-    "category": "建筑",
+    "category": "奇观",
     "description": "全木结构的楼阁式古塔，塔高67米，历经千年风雨依旧巍然屹立，是中国古代木构建筑的瑰宝。",
     "type": [
       "material",

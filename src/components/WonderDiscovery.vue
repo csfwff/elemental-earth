@@ -31,7 +31,7 @@
               <div class="wonder-icon-wrapper">
                 <div class="wonder-icon-glow" />
                 <div class="wonder-icon-inner">
-                  <span class="wonder-emoji">{{ wonderEmoji }}</span>
+                  <img :src="wonderImage" class="wonder-action-image" />
                 </div>
               </div>
 
@@ -91,17 +91,11 @@ const rewardInfo = computed(() => {
   }
 })
 
-// 根据 Key 匹配一些特定的图标，增加仪式感
-const wonderEmoji = computed(() => {
-  const k = props.actionKey || ''
-  if (k.includes('zun')) return '🏺'
-  if (k.includes('pantheon') || k.includes('temple')) return '🏛️'
-  if (k.includes('pyramid')) return '𓂀'
-  if (k.includes('wall')) return '🧱'
-  if (k.includes('tower')) return '🗼'
-  if (k.includes('pagoda')) return '⛩️'
-  if (k.includes('space_station')) return '🛰'
-  return '🏆'
+// 根据 Key 获取奇观图片
+const wonderImage = computed(() => {
+  if (!rewardInfo.value?.key) return ''
+  // 采用动态导入或 URL 方式引入图片
+  return new URL(`../assets/images/${rewardInfo.value.key}.png`, import.meta.url).href
 })
 
 // 动画流程控制
@@ -290,8 +284,10 @@ function onOverlayClick() {
   box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
 }
 
-.wonder-emoji {
-  font-size: 8rem;
+.wonder-action-image {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
   filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
 }
 
