@@ -167,6 +167,9 @@
         <div class="flex items-center justify-between gap-2">
           <h2 class="card-title text-base">Mod 管理</h2>
           <div class="join">
+            <router-link to="/mods" class="btn btn-sm join-item">
+              Mod 开发
+            </router-link>
             <button class="btn btn-sm join-item" @click="showModImport = true">导入文本</button>
             <button class="btn btn-sm join-item tooltip" data-tip="JSON/ZIP" :disabled="modFileImporting" @click="openModFilePicker">
               {{ modFileImporting ? '导入中...' : '导入文件' }}

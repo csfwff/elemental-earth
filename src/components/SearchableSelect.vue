@@ -1,13 +1,21 @@
 <template>
   <div class="relative isolation-auto" ref="wrapperRef">
     <!-- 触发器 -->
-    <div class="flex items-center gap-1" :class="{ 'input input-bordered p-0 pr-2': border, ['input-' + size]: size }">
-      <button type="button" class="grow flex items-center justify-between gap-1 text-left px-3 h-full overflow-hidden"
-        :class="{ 'text-base-content/40': !selected }"
+    <div class="flex items-center gap-1" :class="{ 'input input-bordered p-0 pr-2 h-auto min-h-8': border, ['input-' + size]: size }">
+      <button type="button" class="grow flex flex-wrap items-center gap-1 text-left px-3 py-1 min-h-full overflow-hidden"
+        :class="{ 'text-base-content/40': !hasValue }"
         @click="toggleOpen">
-        <span class="truncate">{{ selected ? getLabel(selected) : placeholder }}</span>
+        <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+          <div v-for="val in selected" :key="val" class="badge badge-sm badge-secondary gap-1 pr-1">
+            {{ getLabel(val) }}
+            <span class="hover:bg-base-content/20 rounded-full p-0.5 cursor-pointer" @click.stop="pick(val)">
+              <svg class="w-2 h-2" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+            </span>
+          </div>
+        </template>
+        <span v-else class="truncate">{{ hasValue && !Array.isArray(selected) ? getLabel(selected) : placeholder }}</span>
       </button>
-      <button v-if="selected && clearable" type="button" class="btn btn-ghost btn-circle btn-xs opacity-40 hover:opacity-100" @click.stop="clear">
+      <button v-if="hasValue && clearable" type="button" class="btn btn-ghost btn-circle btn-xs opacity-40 hover:opacity-100" @click.stop="clear">
         <svg class="w-2.5 h-2.5" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
       </button>
       <svg class="w-3 h-3 opacity-40 shrink-0 transition-transform pointer-events-none" :class="{ 'rotate-180': open }" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
@@ -27,10 +35,11 @@
         <!-- 选项列表 -->
         <div class="overflow-y-auto grow max-h-65">
           <button v-for="opt in filteredOptions" :key="getValue(opt)"
-            class="w-full text-left px-3 py-1.5 text-sm hover:bg-base-200 transition-colors flex items-center justify-between gap-2"
-            :class="{ 'bg-primary/10 text-primary font-bold': getValue(opt) === selected }"
+            class="w-full text-left px-3 py-2 text-sm hover:bg-base-200 transition-colors flex items-center gap-2"
+            :class="{ 'bg-primary/10 text-primary font-bold': isSelected(opt) }"
             @click="pick(opt)">
-            <span class="truncate">{{ getLabel(opt) }}</span>
+            <input v-if="multiple" type="checkbox" :checked="isSelected(opt)" class="checkbox checkbox-xs pointer-events-none" />
+            <span class="truncate grow">{{ getLabel(opt) }}</span>
             <span class="text-[10px] opacity-40 shrink-0 font-mono">{{ getValue(opt) }}</span>
           </button>
           <div v-if="filteredOptions.length === 0" class="px-3 py-4 text-xs text-base-content/40 text-center">无匹配</div>
@@ -45,21 +54,23 @@ import { ref, computed, watch, nextTick } from 'vue'
 
 const props = withDefaults(defineProps<{
   options: { key?: string; name?: string; label?: string; value?: string }[] | string[]
-  modelValue?: string
+  modelValue?: string | string[]
   placeholder?: string;
   border?: boolean;
   size?: string;
   appendToBody?: boolean;
   clearable?: boolean;
+  multiple?: boolean;
 }>(), {
   placeholder: '',
   border: true,
   size: 'md',
   appendToBody: false,
-  clearable: false
+  clearable: false,
+  multiple: false
 })
 
-const emit = defineEmits<{ 'update:modelValue': [v: string] }>()
+const emit = defineEmits<{ 'update:modelValue': [v: string | string[]] }>()
 
 const open = ref(false)
 const query = ref('')
@@ -69,6 +80,10 @@ const searchRef = ref<HTMLInputElement | null>(null)
 const panelStyle = ref<Record<string, string>>({ top: '0px', left: '0px', width: '200px' })
 
 const selected = computed(() => props.modelValue)
+const hasValue = computed(() => {
+  if (props.multiple) return Array.isArray(props.modelValue) && props.modelValue.length > 0
+  return !!props.modelValue
+})
 
 function getValue(opt: any): string {
   if (typeof opt === 'string') return opt
@@ -78,6 +93,14 @@ function getLabel(opt: any): string {
   if (opt === undefined || opt === null) return ''
   if (typeof opt === 'string') return getLabel(props.options.find(o => getValue(o) === opt)) ?? opt
   return opt.name ?? opt.label ?? opt.key ?? opt.value ?? String(opt)
+}
+
+function isSelected(opt: any): boolean {
+  const val = getValue(opt)
+  if (props.multiple && Array.isArray(props.modelValue)) {
+    return props.modelValue.includes(val)
+  }
+  return props.modelValue === val
 }
 
 const filteredOptions = computed(() => {
@@ -121,12 +144,24 @@ function positionPanel() {
 }
 
 function pick(opt: any) {
-  emit('update:modelValue', getValue(opt))
-  close()
+  const val = getValue(opt)
+  if (props.multiple) {
+    const current = Array.isArray(props.modelValue) ? [...props.modelValue] : []
+    const index = current.indexOf(val)
+    if (index > -1) {
+      current.splice(index, 1)
+    } else {
+      current.push(val)
+    }
+    emit('update:modelValue', current)
+  } else {
+    emit('update:modelValue', val)
+    close()
+  }
 }
 
 function clear() {
-  emit('update:modelValue', '')
+  emit('update:modelValue', props.multiple ? [] : '')
   close()
 }
 

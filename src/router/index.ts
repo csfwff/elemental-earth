@@ -65,6 +65,15 @@ export const routes: RouteRecordRaw[] = [
       { path: ':key', name: 'WikiDetail', component: () => import('../views/WikiDetailView.vue') },
     ],
   },
+  // ─── Mod 开发中心 ─────────────────────────────────────────
+  {
+    path: '/mods',
+    component: () => import('../layouts/ModDevLayout.vue'),
+    children: [
+      { path: '', name: 'ModDevHome', component: () => import('../views/mods/ModDevTutorialView.vue') },
+      { path: 'builder', name: 'ModDevBuilder', component: () => import('../views/mods/ModDevBuilderView.vue') },
+    ],
+  },
   // ─── Admin 管理后台 ─────────────────────────────────────────
   {
     path: '/admin',
