@@ -35,7 +35,7 @@
             Mod 开发教程
           </h1>
           <div class="alert alert-warning alert-soft text-sm">
-            <Icon icon="tabler:shield-alert" />
+            <Icon icon="mdi:shield-alert" />
             <span>Full Trust 脚本可访问 Store、DOM 与网络，仅加载可信 Mod。</span>
           </div>
           <article class="mod-doc" v-html="html"></article>
