@@ -117,6 +117,7 @@ onMounted(() => {
 .mod-doc :deep(h2),
 .mod-doc :deep(h3) {
   scroll-margin-top: 6rem;
+  margin-bottom: 0.5rem;
 }
 
 .mod-doc :deep(h1) {
@@ -135,6 +136,18 @@ onMounted(() => {
   font-size: 1.05rem;
   font-weight: 600;
   margin-top: 1rem;
+}
+
+.mod-doc :deep(ul) {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+  list-style: '- ';
+}
+
+.mod-doc :deep(ol) {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+  list-style: decimal;
 }
 
 .mod-doc :deep(p),
@@ -159,16 +172,17 @@ onMounted(() => {
 
 .mod-doc :deep(code) {
   font-size: 0.85rem;
-  background: color-mix(in oklab, var(--color-base-200) 80%, transparent);
-  padding: 0.1rem 0.3rem;
+  background: var(--color-base-300);
+  padding: 0.2rem 0.3rem;
   border-radius: 0.25rem;
 }
 
 .mod-doc :deep(pre) {
-  background: color-mix(in oklab, var(--color-base-200) 80%, transparent);
+  background: var(--color-base-300);
   border: 1px solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
   border-radius: 0.5rem;
   padding: 0.75rem;
   overflow: auto;
+  margin: 1em 0;
 }
 </style>
