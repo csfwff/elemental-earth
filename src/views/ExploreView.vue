@@ -219,7 +219,7 @@ const unlockedWonders = computed(() => {
 function getWonderEmoji(key: string) {
   if (key.includes('zun')) return '🏺'
   if (key.includes('pantheon') || key.includes('temple')) return '🏛️'
-  if (key.includes('pyramid')) return '📐'
+  if (key.includes('pyramid')) return '𓂀'
   if (key.includes('wall')) return '🧱'
   if (key.includes('tower')) return '🗼'
   if (key.includes('pagoda')) return '⛩️'

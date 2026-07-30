@@ -96,7 +96,7 @@ const wonderEmoji = computed(() => {
   const k = props.actionKey || ''
   if (k.includes('zun')) return '🏺'
   if (k.includes('pantheon') || k.includes('temple')) return '🏛️'
-  if (k.includes('pyramid')) return '📐'
+  if (k.includes('pyramid')) return '𓂀'
   if (k.includes('wall')) return '🧱'
   if (k.includes('tower')) return '🗼'
   if (k.includes('pagoda')) return '⛩️'
